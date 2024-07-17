@@ -8,3 +8,7 @@ STEP 1: Create a file in editor in Linux environment
 
 STEP 2: Write your code in leafpad and save it
 
+![s1](https://github.com/user-attachments/assets/05d04e05-9b15-4e7c-9616-d45edaaf0f4f)
+
+STEP 3: Compile your code using gcc compiler in the terminal window
+
