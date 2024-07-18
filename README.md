@@ -1,6 +1,6 @@
-Task 1 : Compiling a C program using GCC and RISC-V
+<h1>**Task 1 : Compiling a C program using GCC and RISC-V**
 
-STEP 1: Create a file in editor in Linux environment
+**STEP 1:** Create a file in editor in Linux environment
 
 ![s0](https://github.com/user-attachments/assets/2579e3bb-2e9c-4806-8f93-6601cff88121)
 
