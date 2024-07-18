@@ -1,4 +1,4 @@
-**<h1>Task 1 : Compiling a C program using GCC and RISC-V<h1>**
+**Task 1 : Compiling a C program using GCC and RISC-V**
 
 **STEP 1:** Create a file in editor in Linux environment
 
