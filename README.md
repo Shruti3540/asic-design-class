@@ -26,7 +26,7 @@
 
 ![1](https://github.com/user-attachments/assets/bfcc7bcd-15aa-4342-870f-fa317551bd25)
 
-**STEP 2:** Compile the C program using the RISC-V compiler with -O1 optimization.
+**STEP 2:** Compile the C program using the RISC-V compiler with **-O1** optimization.
 
 ![2](https://github.com/user-attachments/assets/15abca9b-87b6-497d-adcf-1ae24bf3ea99)
 
@@ -38,7 +38,7 @@
 
 ![3](https://github.com/user-attachments/assets/e6cd9366-a5df-4b40-8b4b-da3129cbd927)
 
-**STEP 5:** Now again compile the same program using RISC - V compiler but now optimise the compilation using Ofast.
+**STEP 5:** Now again compile the same program using RISC - V compiler but now optimise the compilation using **-Ofast** optimization.
 
 ![3b](https://github.com/user-attachments/assets/adad17db-ca14-45f4-b8e4-3077b3c09c05)
 
@@ -46,7 +46,7 @@
 
 ![4](https://github.com/user-attachments/assets/858d515d-f8b5-49b7-af2a-79da66d20a9e)
 
-**Conclusion: We get an optimized compilation using ofast.**
+**Conclusion: We get an optimized compilation using -Ofast.**
 
 
 
