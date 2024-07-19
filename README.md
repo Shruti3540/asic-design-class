@@ -38,6 +38,8 @@
 
 ![3](https://github.com/user-attachments/assets/e6cd9366-a5df-4b40-8b4b-da3129cbd927)
 
+**OBSERVATION 1: There are 14 lines of opcode in main section** 
+
 **STEP 5:** Now again compile the same program using RISC - V compiler but now optimise the compilation using **-Ofast** optimization.
 
 ![3b](https://github.com/user-attachments/assets/adad17db-ca14-45f4-b8e4-3077b3c09c05)
@@ -45,6 +47,8 @@
 **STEP 6:** Similar to the step 3 we enter a command and get another list. The main section of ofast looks as shown in the image.
 
 ![4](https://github.com/user-attachments/assets/858d515d-f8b5-49b7-af2a-79da66d20a9e)
+
+**OBSERVATION 2: There are 11 lines of opcode in main section**
 
 **Conclusion: We get an optimized compilation using -Ofast.**
 
