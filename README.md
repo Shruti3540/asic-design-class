@@ -1,3 +1,6 @@
+# **LAB 1:**
+
+
 # **LAB 2:**
 
 ## **Task 1 : To compile the Object dump file and verify the output with the GCC output from Lab 1.**
@@ -38,7 +41,14 @@ until pc 0 100b0
 **STEP 2:** Run the following Commands and Observe the Register Values.
 ```bash
 reg 0 a2
+reg 0 sp
 ```
+
+**FINAL OUTPUT:**
+
+<img width="715" alt="Screenshot 2024-07-21 234052" src="https://github.com/user-attachments/assets/0191ffa6-1ef5-45de-90b6-aefbdf1f53ef">
+
+
 # **LAB 3:** 
 
 ## **TASK 1: Identifying Instruction Format**
