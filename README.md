@@ -335,7 +335,7 @@ Instruction format is as follows:
   - **R-Type**
   - 32-bit Instruction: `0000000_00001_00001_001_00101_0110011`
  
-## **TASK 2: Executing assembly instructions based on a provided Verilog code within a RISC-V processor.**
+## **TASK 3: Executing assembly instructions based on a provided Verilog code within a RISC-V processor.**
 Firstly for the provided verilog code there is some variations in the ISA followed by RISCV and the hardcoded ISA. The differences are shown in the table below:
 
 | Operation            | Standard RISC-V ISA | Hardcoded ISA  |
@@ -370,3 +370,6 @@ Now for the custom instructions provided:
 | LW r13, r11, 2        | 32'h000969A1 | 000000000010 01011 010 01101 00001 |
 | SLL r15, r11, r2      | 32'h002597B3 | 0000000 00010 01011 001 01111 0110011 |
 | BEQ r0, r0, 15        | 32'h00000F63 | 0 000000 00000 00000 000 1111 0 1100011 |
+
+
+## **TASK 4: RISC-V Functional Simulation**
