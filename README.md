@@ -1,6 +1,6 @@
 # **LAB 1:**
 
-## **Task 1 : Compiling a C program using GCC and RISC-V**
+### **Task 1 : Compiling a C program using GCC and RISC-V**
 
 **STEP 1:** Create a file in editor in Linux environment
 
@@ -22,7 +22,7 @@
 
 ![s4](https://github.com/user-attachments/assets/21afb510-b79e-4b97-a0eb-ba57cc9d2d26)
 
-## **Task 2 : Compile and run a C program using a RISC-V compiler, optimizing the compilation with -O1 and -Ofast**
+### **Task 2 : Compile and run a C program using a RISC-V compiler, optimizing the compilation with -O1 and -Ofast**
 
 **STEP 1:** Write a c program sum1ton on leafpad and save it. Enter a command cat sum1ton.c to view its contents in the terminal.
 
@@ -56,7 +56,7 @@
 
 # **LAB 2:**
 
-## **Task 1 : To compile the Object dump file and verify the output with the GCC output from Lab 1.**
+### **Task 1 : To compile the Object dump file and verify the output with the GCC output from Lab 1.**
 
 **STEP 1:** Compile sum1ton.c (C source file) into sum1ton.o (Object file) for RISC-V with -Ofast optimization.
 ``` bash
@@ -79,7 +79,7 @@ We get the following output:
 
 ![2b](https://github.com/user-attachments/assets/643b5ae2-305a-4336-ac65-668a8b5a052d)
 
-## **Task 2 : To debug the main function and observe register values**
+### **Task 2 : To debug the main function and observe register values**
 
 **STEP 1:** Run the assembly code in sum1ton.o on the Spike simulator in debug mode.
 ``` bash
@@ -104,7 +104,7 @@ reg 0 sp
 
 # **LAB 3:** 
 
-## **TASK 1: Identifying Instruction Format**
+### **TASK 1: Identifying Instruction Format**
 The task is to identify different types of instructions based on the provided guidelines. This identification is done using a 32-bit code, with each instruction type having its unique format.
 
 ### RISC-V Instruction Formats
@@ -207,9 +207,9 @@ Instruction format is as follows:
 - **rd (5 bits):** Destination register where the return address is stored.
 - **opcode (7 bits):** Operation code for J-type instructions.
 
-## **TASK 2: Decoding each Instruction Provided**
+### **TASK 2: Decoding each Instruction Provided**
 
-- **ADD r8, r9, r10**
+1) **ADD r8, r9, r10**
   - Opcode: 0110011
   - rd = r8 = 01000
   - rs1 = r9 = 01001
@@ -219,7 +219,7 @@ Instruction format is as follows:
   - **R-Type**
   - 32-bit Instruction: `0000000_01010_01001_000_01000_0110011`
 
-- **SUB r10, r8, r9**
+2) **SUB r10, r8, r9**
   - Opcode: 0110011
   - rd = r10 = 01010
   - rs1 = r8 = 01000
@@ -229,7 +229,7 @@ Instruction format is as follows:
   - **R-Type**
   - 32-bit Instruction: `0100000_01001_01000_000_01010_0110011`
 
-- **AND r9, r8, r10**
+3) **AND r9, r8, r10**
   - Opcode: 0110011
   - rd = r9 = 01001
   - rs1 = r8 = 01000
@@ -239,7 +239,7 @@ Instruction format is as follows:
   - **R-Type**
   - 32-bit Instruction: `0000000_01010_01000_111_01001_0110011`
 
-- **OR r8, r9, r5**
+4) **OR r8, r9, r5**
   - Opcode: 0110011
   - rd = r8 = 01000
   - rs1 = r9 = 01001
@@ -249,7 +249,7 @@ Instruction format is as follows:
   - **R-Type**
   - 32-bit Instruction: `0000000_00101_01001_110_01000_0110011`
 
-- **XOR r8, r8, r4**
+5) **XOR r8, r8, r4**
   - Opcode: 0110011
   - rd = r8 = 01000
   - rs1 = r8 = 01000
@@ -259,7 +259,7 @@ Instruction format is as follows:
   - **R-Type**
   - 32-bit Instruction: `0000000_00100_01000_100_01000_0110011`
 
-- **SLT r0, r1, r4**
+6) **SLT r0, r1, r4**
   - Opcode: 0110011
   - rd = r0 = 00000
   - rs1 = r1 = 00001
@@ -269,7 +269,7 @@ Instruction format is as follows:
   - **R-Type**
   - 32-bit Instruction: `0000000_00100_00001_010_00000_0110011`
 
-- **ADDI r2, r2, 5**
+7) **ADDI r2, r2, 5**
   - Opcode: 0010011
   - rd = r2 = 00010
   - rs1 = r2 = 00010
@@ -278,7 +278,7 @@ Instruction format is as follows:
   - **I-Type**
   - 32-bit Instruction: `000000000101_00010_000_00010_0010011`
 
-- **SW r2, r0, 4**
+8) **SW r2, r0, 4**
   - Opcode: 0100011
   - rs2 = r2 = 00010
   - rs1 = r0 = 00000
@@ -288,7 +288,7 @@ Instruction format is as follows:
   - **S-Type**
   - 32-bit Instruction: `0000000_00010_00000_010_00100_0100011`
 
-- **SRL r6, r1, r1**
+9) **SRL r6, r1, r1**
   - Opcode: 0110011
   - rd = r6 = 00110
   - rs1 = r1 = 00001
@@ -298,7 +298,7 @@ Instruction format is as follows:
   - **R-Type**
   - 32-bit Instruction: `0000000_00001_00001_101_00110_0110011`
 
-- **BNE r0, r0, 20**
+10) **BNE r0, r0, 20**
   - Opcode: 1100011
   - rs1 = r0 = 00000
   - rs2 = r0 = 00000
@@ -307,7 +307,7 @@ Instruction format is as follows:
   - **B-Type**
   - 32-bit Instruction: `0000000_00000_00000_001_00010_0000000_1100011`
 
-- **BEQ r0, r0, 15**
+11) **BEQ r0, r0, 15**
   - Opcode: 1100011
   - rs1 = r0 = 00000
   - rs2 = r0 = 00000
@@ -316,7 +316,7 @@ Instruction format is as follows:
   - **B-Type**
   - 32-bit Instruction: `0000000_00000_00000_000_00001_0000000_1100011`
 
-- **LW r3, r1, 2**
+12) **LW r3, r1, 2**
   - Opcode: 0000011
   - rd = r3 = 00011
   - rs1 = r1 = 00001
@@ -325,7 +325,7 @@ Instruction format is as follows:
   - **I-Type**
   - 32-bit Instruction: `000000000010_00001_010_00011_0000011`
  
-- **SLL r5, r1, r1**
+13) **SLL r5, r1, r1**
   - Opcode: 0110011
   - rd = r5 = 00101
   - rs1 = r1 = 00001
@@ -335,7 +335,7 @@ Instruction format is as follows:
   - **R-Type**
   - 32-bit Instruction: `0000000_00001_00001_001_00101_0110011`
  
-## **TASK 3: Executing assembly instructions based on a provided Verilog code within a RISC-V processor.**
+### **TASK 3: Executing assembly instructions based on a provided Verilog code within a RISC-V processor.**
 Firstly for the provided verilog code there is some variations in the ISA followed by RISCV and the hardcoded ISA. The differences are shown in the table below:
 
 | Operation            | Standard RISC-V ISA | Hardcoded ISA  |
@@ -345,7 +345,7 @@ Firstly for the provided verilog code there is some variations in the ISA follow
 | AND R8, R1, R3       | 32'h0030f433         | 32'h0230a400   |
 | OR R9, R2, R5        | 32'h005164b3         | 32'h02513480   |
 | XOR R10, R1, R4      | 32'h0040c533         | 32'h0240c500   |
-| SLT R1, R2, R4       | 32'h0045a0b3         | 32'h02415580   |
+| S#LT R1, R2, R4       | 32'h0045a0b3         | 32'h02415580   |
 | ADDI R12, R4, 5      | 32'h004120b3         | 32'h00520600   |
 | BEQ R0, R0, 15       | 32'h00000f63         | 32'h00f00002   |
 | SW R3, R1, 2         | 32'h0030a123         | 32'h00209181   |
@@ -371,5 +371,26 @@ Now for the custom instructions provided:
 | SLL r15, r11, r2      | 32'h002597B3 | 0000000 00010 01011 001 01111 0110011 |
 | BEQ r0, r0, 15        | 32'h00000F63 | 0 000000 00000 00000 000 1111 0 1100011 |
 
+### **TASK 4: RISC-V Functional Simulation**
 
-## **TASK 4: RISC-V Functional Simulation**
+1. Compile the Verilog Code using the below command
+
+ ```bash
+ iverilog -o iiitb_rv32i iiitb_rv32i.v iiitb_rv32i_tb.v
+ ```
+2. Run this command to execute the test bench and generate a .vcd file:
+ ```bash
+  vvp iiitb_rv32i_tb
+ ```
+3. View the Test Bench in GTKWave:
+```bash
+gtkwave iiitb_rv32i.vcd
+```
+
+### The waveform for the hardcoded instruction is given below:
+
+![Screenshot from 2024-07-28 22-48-22](https://github.com/user-attachments/assets/b0cf5c3d-1007-4a0e-a52f-dc4389a7a7f8)
+
+### Observation:
+
+We observe a variation between bit pattern of RISCV code and hardcoded ISA.
