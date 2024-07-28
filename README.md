@@ -1,4 +1,4 @@
-# **LAB 1:**
+# **LAB SESSION 1:**
 
 ### **Task 1 : Compiling a C program using GCC and RISC-V**
 
@@ -54,7 +54,7 @@
 
 **Conclusion: We get an optimized compilation using -Ofast.**
 
-# **LAB 2:**
+# **LAB SESSION 2:**
 
 ### **Task 1 : To compile the Object dump file and verify the output with the GCC output from Lab 1.**
 
@@ -102,7 +102,7 @@ reg 0 sp
 <img width="715" alt="Screenshot 2024-07-21 234052" src="https://github.com/user-attachments/assets/0191ffa6-1ef5-45de-90b6-aefbdf1f53ef">
 
 
-# **LAB 3:** 
+# **LAB SESSION 3:** 
 
 ### **TASK 1: Identifying Instruction Format**
 The task is to identify different types of instructions based on the provided guidelines. This identification is done using a 32-bit code, with each instruction type having its unique format.
