@@ -460,3 +460,95 @@ We observe a variation between bit pattern of RISCV code and hardcoded ISA.
 
 
 </details>
+
+
+***
+
+
+<details>
+  <summary>LAB 4: Writing a C program for a simple application that can be compiled using GCC and RISC-V GCC. </summary>
+
+# **LAB SESSION 4:**
+In this lab, we are repeating the steps performed in the previous labs, but for a different application.
+
+**APPLICATION :ELEVATOR CONTROLLER** 
+The code provided is a simple implementation of an elevator controller in C. It simulates the basic operations of an elevator, including moving between floors, handling user input for destination floors, and providing feedback on the elevator's status. This program models how an elevator tracks its current position, responds to user commands, and manages directional movement to reach the desired floor, making it a fundamental example of how elevator systems work in real-world applications.
+
+### Task 1 : Write a C code and compiling the program using GCC.
+
+**STEP 1:** Write a C code for the desired application.
+
+```
+#include <stdio.h>
+
+int main() {
+    int current_floor = 0;
+    int destination_floor;
+
+    while (1) {
+        printf("Current Floor: %d\n", current_floor);
+        printf("Enter the destination floor (0-9): ");
+        scanf("%d", &destination_floor);
+
+        if (destination_floor < 0 || destination_floor > 9) {
+            printf("Invalid floor!\n");
+            continue;
+        }
+
+        if (destination_floor > current_floor) {
+            printf("Going up...\n");
+            for (int i = current_floor; i <= destination_floor; i++) {
+                printf("Floor %d\n", i);
+            }
+        } else if (destination_floor < current_floor) {
+            printf("Going down...\n");
+            for (int i = current_floor; i >= destination_floor; i--) {
+                printf("Floor %d\n", i);
+            }
+        } else {
+            printf("Already at floor %d\n", current_floor);
+        }
+
+        current_floor = destination_floor;
+    }
+    return 0;
+}
+
+```
+
+**STEP 2 :** Compile your code using gcc compiler in the terminal window.
+
+```
+gcc ElevatorController.c
+```
+
+**STEP 3 :** Run the executable file in your terminal to view its output.
+
+![lab 4 1](https://github.com/user-attachments/assets/74ef10db-a01c-42b3-b45a-8a52b34b0b97)
+
+### Task 2 :  Compile and run a C program using a RISC-V compiler, optimizing the compilation with -O1.
+
+**STEP 1:** Compile using O1 compiler flag use the following command:
+
+```
+riscv64-unknown-elf-gcc -O1 -mabi=lp64i -march=rv64i -o ElevatorControllerO1 ElevatorController.c
+```
+
+**STEP 2:** ElevatorControllerO1 is the output file after compiler. Output can be seen using the command:
+
+```
+spike pk ElevatorControllerO1
+```
+
+**STEP 3:** The output is the same as GCC :
+
+![lab 4 2](https://github.com/user-attachments/assets/aa775e37-8023-4652-b0e8-0a2b4093c615)
+
+### Comparing the gcc compiled output and the risc-v output:
+
+![lab 4 3](https://github.com/user-attachments/assets/957ee189-b719-47c9-af6a-0bfb8c4a31b6)
+
+**OBSERVATION : The output from both the compilation techniques results to same value for similar inputs given.**
+
+
+</details>
