@@ -471,7 +471,8 @@ We observe a variation between bit pattern of RISCV code and hardcoded ISA.
 # **LAB SESSION 4:**
 In this lab, we are repeating the steps performed in the previous labs, but for a different application.
 
-**APPLICATION :ELEVATOR CONTROLLER** 
+**APPLICATION : ELEVATOR CONTROLLER** 
+
 The code provided is a simple implementation of an elevator controller in C. It simulates the basic operations of an elevator, including moving between floors, handling user input for destination floors, and providing feedback on the elevator's status. This program models how an elevator tracks its current position, responds to user commands, and manages directional movement to reach the desired floor, making it a fundamental example of how elevator systems work in real-world applications.
 
 ### Task 1 : Write a C code and compiling the program using GCC.
