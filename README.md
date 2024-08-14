@@ -475,7 +475,7 @@ In this lab, we are repeating the steps performed in the previous labs, but for 
 
 The code provided is a simple implementation of an elevator controller in C. It simulates the basic operations of an elevator, including moving between floors, handling user input for destination floors, and providing feedback on the elevator's status. This program models how an elevator tracks its current position, responds to user commands, and manages directional movement to reach the desired floor, making it a fundamental example of how elevator systems work in real-world applications.
 
-### Task 1 : Write a C code and compiling the program using GCC.
+### Task 1 : Writing a C code and compiling the program using GCC (O0).
 
 **STEP 1:** Write a C code for the desired application.
 
@@ -527,7 +527,7 @@ gcc ElevatorController.c
 
 ![lab 4 1](https://github.com/user-attachments/assets/74ef10db-a01c-42b3-b45a-8a52b34b0b97)
 
-### Task 2 :  Compile and run a C program using a RISC-V compiler, optimizing the compilation with -O1.
+### Task 2 :  Compile and run a C program using a RISC-V compiler, optimizing the compilation with -O1 (O1).
 
 **STEP 1:** Compile using O1 compiler flag use the following command:
 
@@ -535,13 +535,13 @@ gcc ElevatorController.c
 riscv64-unknown-elf-gcc -O1 -mabi=lp64i -march=rv64i -o ElevatorControllerO1 ElevatorController.c
 ```
 
-**STEP 2:** ElevatorControllerO1 is the output file after compiler. Output can be seen using the command:
+**STEP 2:** ElevatorControllerO1 is the output file after compilation. Output can be seen using the command:
 
 ```
 spike pk ElevatorControllerO1
 ```
 
-**STEP 3:** The output is the same as GCC :
+**STEP 3:** The output is :
 
 ![lab 4 2](https://github.com/user-attachments/assets/aa775e37-8023-4652-b0e8-0a2b4093c615)
 
@@ -549,7 +549,8 @@ spike pk ElevatorControllerO1
 
 ![lab 4 3](https://github.com/user-attachments/assets/957ee189-b719-47c9-af6a-0bfb8c4a31b6)
 
-**OBSERVATION : The output from both the compilation techniques results to same value for similar inputs given.**
+### **OBSERVATION : The output from both the compilation techniques results to same value for similar inputs given.**
+## Hence O0=O1
 
 
 </details>
