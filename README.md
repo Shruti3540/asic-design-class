@@ -2063,3 +2063,7 @@ $valid = $reset ? 1'b0 : ($start) ? 1'b1 : (>>3$valid) ;
 
 ### WAVEFORM:
 ![Screenshot 2024-08-22 025402](https://github.com/user-attachments/assets/8a31629e-930f-4dd4-8570-0a926708d1a7)
+
+### FINAL OUTPUT WAVEFORM:
+![Screenshot 2024-08-22 140254](https://github.com/user-attachments/assets/d76950f0-7253-4f86-98d9-159be1b14c26)
+
