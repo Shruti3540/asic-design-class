@@ -2067,3 +2067,75 @@ $valid = $reset ? 1'b0 : ($start) ? 1'b1 : (>>3$valid) ;
 ### FINAL OUTPUT WAVEFORM:
 ![Screenshot 2024-08-22 140254](https://github.com/user-attachments/assets/d76950f0-7253-4f86-98d9-159be1b14c26)
 
+
+</details>
+
+
+***
+
+
+<details>
+  <summary>LAB 8: Conversion from TL-Verilog into Verilog using Sandpiper-SaaS compiler. </summary>
+
+# **LAB SESSION 8:**
+We originally designed the RISC-V processor using TL-Verilog in the Makerchip IDE. To deploy this design onto an FPGA, we needed to convert the TL-Verilog code into standard Verilog. We successfully carried out this conversion using the Sandpiper-SaaS compiler, which facilitated the transition from high-level TL-Verilog to the more widely used Verilog language, suitable for FPGA implementation. After the conversion, we perform pre-synthesis simulations using the GTKWave simulator to thoroughly verify the functionality and correctness of the design before proceeding to the synthesis and hardware deployment stages. These simulations are crucial for ensuring that the design behaves as expected in a real hardware environment.
+
+### **STEP BY STEP PROCESS:**
+
+#### **STEP 1:** Install required packages
+```
+sudo apt install make python python3 python3-pip git iverilog gtkwave
+sudo apt-get install python3-venv
+python3 -m venv .venv
+source ~/.venv/bin/activate
+pip3 install pyyaml click sandpiper-saas
+```
+
+#### **STEP 2:** Clone the given Github repository and go to VSDbabySoc folder
+```
+git clone https://github.com/manili/VSDBabySoC.git
+cd VSDBabySoc
+```
+![Screenshot 2024-08-27 023606](https://github.com/user-attachments/assets/c69c030e-c6a8-413a-b48f-3f87b4e42ac1)
+
+#### **STEP 3:** Replace the .tlv file in the VSDBabySoC/src/module directory with the RISC-V .tlv file that we intend to convert into Verilog
+
+#### **STEP 4:** Convert the RISC-V .tlv file into a .v Verilog file by executing the following command:
+```
+sandpiper-saas -i /home/vsduser/VSDBabySoC/shruti_rvmyth.tlv -o shruti_rvmyth.v --bestsv --noline -p verilog --outdir /home/vsduser/VSDBabySoC/
+```
+
+#### **STEP 5:** Now create the pre_synth_sim.vcd by executing the following command:
+```
+make pre_synth_sim
+```
+
+#### **STEP 6:** Compile and simulate the RISC-V design using the following command:
+```
+iverilog -o output/pre_synth_sim.out -DPRE_SYNTH_SIM src/module/testbench.v -I src/include -I src/module
+cd output
+./pre_synth_sim.out
+```
+
+#### **STEP 7:** To open the Simulation file in gtkwave tool, run the following command:
+```
+gtkwave pre_synth_sim.vcd
+```
+
+By following these steps, we will successfully convert a RISC-V .tlv file into Verilog and simulate the design using Icarus Verilog and GTKWave.
+
+### **GTKWave Output Waveform:**
+![lab8](https://github.com/user-attachments/assets/99e04e18-309e-467a-9df7-4371c88f454d)
+
+**Signals in the Diagram:**
+
+1) clk_shru: Clock input to the RISC-V core.
+2) reset: Input reset signal to the RISC-V core.
+3) OUT[9:0]: 10-bit output port of the RISC-V core.
+
+### **Makerchip Output Waveform:**
+![Screenshot 2024-08-27 023111](https://github.com/user-attachments/assets/a432a45b-c511-445c-893a-a39bd5844086)
+
+### **CONCLUSION:**
+The output showing the sum of integers from 1 to 9 is 02D in the waveforms of both Makerchip and GTKWave simulations.
+
