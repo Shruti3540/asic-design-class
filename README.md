@@ -2096,7 +2096,6 @@ pip3 install pyyaml click sandpiper-saas
 git clone https://github.com/manili/VSDBabySoC.git
 cd VSDBabySoc
 ```
-![Screenshot 2024-08-27 023606](https://github.com/user-attachments/assets/c69c030e-c6a8-413a-b48f-3f87b4e42ac1)
 
 #### **STEP 3:** Replace the .tlv file in the VSDBabySoC/src/module directory with the RISC-V .tlv file that we intend to convert into Verilog
 
@@ -2134,6 +2133,14 @@ By following these steps, we will successfully convert a RISC-V .tlv file into V
 3) OUT[9:0]: 10-bit output port of the RISC-V core.
 
 ### **Makerchip Output Waveform:**
+
+#### Waveform containing clk_shru i.e. personalized clock name
+![Screenshot 2024-08-27 073704](https://github.com/user-attachments/assets/eb4c62d8-ec27-4bf9-b837-c36d0aa03d8b)
+
+#### Waveform containing reset signal
+![Screenshot 2024-08-27 073744](https://github.com/user-attachments/assets/2522be12-906d-4a3b-b081-e1749d22d20a)
+
+#### Waveform containing contents in xreg14 for each cycle.
 ![Screenshot 2024-08-27 023111](https://github.com/user-attachments/assets/a432a45b-c511-445c-893a-a39bd5844086)
 
 ### **CONCLUSION:**
