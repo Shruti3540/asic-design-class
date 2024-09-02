@@ -2146,3 +2146,80 @@ By following these steps, we will successfully convert a RISC-V .tlv file into V
 ### **CONCLUSION:**
 The output showing the sum of integers from 1 to 9 is 02D in the waveforms of both Makerchip and GTKWave simulations.
 
+</details>
+
+
+***
+
+
+<details>
+  <summary>LAB 9: Integration of Peripherals for Digital-to-Analog Conversion Using DAC and PLL. </summary>
+
+# **LAB SESSION 9:**
+
+The VSDBabySoC is a compact yet powerful SoC based on the RISCV architecture. It was designed with the primary goal of testing three open-source IP cores together for the first time and calibrating the analog components. The SoC includes an RVMYTH microprocessor, an 8x-PLL for stable clock generation, and a 10-bit DAC for communication with other analog devices.
+
+### Phase-Locked Loop (PLL):
+
+Phase-Locked Loop (PLL) is a feedback control system that generates a signal with a fixed relation to the phase of a reference signal. 
+Basic Components:
+1) **Phase Detector (PD):** Compares the input signal with the output signal of the voltage-controlled oscillator (VCO) and produces an error signal proportional to the phase difference.
+2) **Low Pass Filter (LPF):** Filters the high-frequency components from the phase detector's output, providing a smoother control voltage for the VCO.
+3) **Voltage-Controlled Oscillator (VCO):** Generates a periodic signal (usually a sine wave) whose frequency is determined by the control voltage from the LPF.
+4) **Feedback Loop:** The output of the VCO is fed back into the phase detector, creating a closed-loop system.
+
+### Digital-to-Analog Converter (DAC)
+
+A Digital-to-Analog Converter (DAC) translates digital signals (usually in binary form) into analog signals, such as voltage or current. This conversion is crucial in systems where digital data must interact with analog devices or be presented in a form perceivable by humans, like in audio or video output.
+
+DACs are widely used in applications such as audio playback, video display, and signal processing.
+
+## Following steps are to be followed:
+
+### STEP 1: Clone this repo: https://github.com/Subhasis-Sahu/BabySoC_Simulation.git using the following command.
+
+```
+git clone https://github.com/Subhasis-Sahu/BabySoC_Simulation.git
+```
+```
+cd BabySoC_Simulation
+```
+
+![Screenshot from 2024-09-02 22-26-53](https://github.com/user-attachments/assets/a94f3ee0-8502-4764-b259-0169f3eeda24)
+
+### STEP 2: Change the rvmyth.v code from the previous labs. Then run the following commands and obtain output waveform.
+
+```
+iverilog -o ./pre_synth_sim.out -DPRE_SYNTH_SIM src/module/testbench.v -I src/include -I src/module/
+```
+
+```
+./pre_synth_sim.out
+```
+
+```
+gtkwave pre_synth_sim.vcd
+```
+
+![Screenshot from 2024-09-03 01-59-31](https://github.com/user-attachments/assets/54db4d18-7ae1-4871-8d85-ce4762f3c5ca)
+
+### DATES:
+
+![Screenshot from 2024-09-03 02-00-43](https://github.com/user-attachments/assets/78773587-b16d-4a8c-b62d-d7f150707ac0)
+
+## WAVEFORMS:
+
+![Screenshot from 2024-09-03 01-54-52](https://github.com/user-attachments/assets/684c0fbf-ff53-4996-a546-5122782bf121)
+
+### OBSERVATION:
+
+1) VCO_IN is the input clk reference signal to the PLL module.
+2) reset is the reset signal for the RISC-V CPU.
+3) CLK is the output clk signal from the PLL module.
+4) clk_shru is the clock used by the RISC-V CPU for the operations.
+5) OUT [9:0] is the ouput signal from the RISC-V CPU. Here we can observe the sum value from 1 to 9 over multiple clock cycles.
+6) OUT is the DAC output signal.
+
+
+
+
