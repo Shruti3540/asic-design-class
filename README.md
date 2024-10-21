@@ -2387,7 +2387,8 @@ write_verilog -noattr good_mux_netlist.v
 
 
 <details>
-<summary> <h2> DAY 2: Timing libs, hierarchical vs flat synthesis and efficient flop coding styles </summary>
+<summary> <h2> DAY 2: Timing libs, hierarchical vs flat synthesis and efficient flop coding styles
+</summary>
 
 
 <details>
@@ -3306,13 +3307,12 @@ show
 ![image](https://github.com/user-attachments/assets/85f1afaf-303e-4e5c-b87a-d7eb02db2ded)
 
 </details>
-
-
 </details>
 
 
 <details>
-<summary> <h2> DAY 4: GLS, blocking vs non-blocking and Synthesis-Simulation mismatch </summary>
+<summary> <h2> DAY 4: GLS, blocking vs non-blocking and Synthesis-Simulation mismatch
+</summary>
 
 <details>
 <summary> <h4> TASK 1: Gate Level Synthesis, Synthesis-Simulation mismatch and Blocking/Non-Blocking statements </summary>
@@ -3523,4 +3523,5 @@ gtkwave tb_blocking_caveat.vcd
 In the second wave window, the netlist simulation demonstrates the correct functioning of the DUT (Design Under Test). In contrast, the first image shows improper behavior of the DUT due to the use of a blocking statement, leading to a synthesis-simulation mismatch. This issue is resolved by performing Gate-Level Simulation (GLS), which verifies the correct behavior in the netlist simulation.
 
 </details>
+
 </details>
