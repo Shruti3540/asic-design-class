@@ -2384,9 +2384,9 @@ write_verilog -noattr good_mux_netlist.v
 </details>
 </details>
 
-
 <details>
-<summary> <h2> DAY 2: Timing libs, hierarchical vs flat synthesis and efficient flop coding styles
+<summary> 
+<h2> DAY 2: Timing libs, hierarchical vs flat synthesis and efficient flop coding styles
 </summary>
 
 
