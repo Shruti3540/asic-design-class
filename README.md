@@ -2228,7 +2228,7 @@ gtkwave pre_synth_sim.vcd
 
 
 <details>
-  <summary>LAB 10: </summary>
+  <summary>LAB 10: RTL design using Verilog with SKY130 Technology </summary>
 
   
   <details>
@@ -3053,7 +3053,440 @@ read_verilog dff_const2.v
 synth -top dff_const2
 ```
 
+![Screenshot from 2024-10-22 02-26-44](https://github.com/user-attachments/assets/737c5251-2af2-4b18-92af-136865c3c308)
+
+None D Flip Flop has been synthesised.
+
+Generate netlist and create graphical representation:
+```
+dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show
+```
+
+![Screenshot from 2024-10-22 02-30-30](https://github.com/user-attachments/assets/ffacd6a0-05d5-4275-a9e7-d2bb71f0b8b5)
+
+Since output q doesn't depend on reset edgeand is always 1, therefore the D Flip Flop has been removed.
+
+### 3.  D-Flipflop Constant 3 with Synchronous Reset (active low)
+
+Verilog Code:
+```
+module dff_const3(input clk, input reset, output reg q); 
+	reg q1;
+
+	always @(posedge clk, posedge reset)
+	begin
+		if(reset)
+		begin
+			q <= 1'b1;
+			q1 <= 1'b0;
+		end
+		else
+		begin	
+			q1 <= 1'b1;
+			q <= q1;
+		end
+	end
+endmodule
+```
+
+Synthesis Command:
+```
+sudo -i
+cd /home/shruti-chaturvedi/VLSI/sky130RTLDesignAndSynthesisWorkshop/verilog_files
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog dff_const3.v
+synth -top dff_const3
+```
+
+![Screenshot from 2024-10-22 02-38-56](https://github.com/user-attachments/assets/8aff8f46-32f9-425f-94bf-e5f3b45a9c95)
+
+Generate netlist and create graphical representation:
+```
+dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show
+```
+
+![Screenshot from 2024-10-22 02-41-21](https://github.com/user-attachments/assets/abbf2e38-850d-4645-9a20-7f070c5d012b)
+
+This module defines a D flip-flop, for a positive edge of reset, q is set to 1 and q1 is set to 0. On each clock cycle, q1 is set to 1, and q is updated with the value of q1.
+
+When synthesized, the design will result in a flip-flop where q becomes 1 after the first clock cycle post-reset and stays 1 afterward.
+
+### 4. D-Flipflop Constant 4 with Synchronous Reset (active high)
+
+Verilog Code:
+```
+module dff_const4(input clk, input reset, output reg q); 
+	reg q1;
+
+	always @(posedge clk, posedge reset)
+	begin
+		if(reset)
+		begin
+			q <= 1'b1;
+			q1 <= 1'b1;
+		end
+		else
+		begin	
+			q1 <= 1'b1;
+			q <= q1;
+		end
+	end
+endmodule
+```
+
+Synthesis Command:
+```
+sudo -i
+cd /home/shruti-chaturvedi/VLSI/sky130RTLDesignAndSynthesisWorkshop/verilog_files
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog dff_const4.v
+synth -top dff_const4
+```
+
+![Screenshot from 2024-10-22 02-49-52](https://github.com/user-attachments/assets/555c4e31-64bf-43a0-93dc-d1825f9f7c7a)
+
+Generate netlist and create graphical representation:
+```
+dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show
+```
+
+![Screenshot from 2024-10-22 02-51-52](https://github.com/user-attachments/assets/151becc8-de1b-47a3-89b4-c59c0bb38524)
+
+This module defines a D flip-flop that sets both q and q1 to 1 on a positive edge of reset. On each clock cycle, q1 remains 1, and q is updated with the value of q1 (which is always 1).
+
+When synthesized, the design will result in a flip-flop where q is always 1, regardless of the reset or clock state.
+
+### 5. D-Flipflop Constant 5 with Synchronous Reset
+
+Verilog Code:
+```
+module dff_const5(input clk, input reset, output reg q); 
+	reg q1;
+
+	always @(posedge clk, posedge reset)
+	begin
+		if(reset)
+		begin
+			q <= 1'b0;
+			q1 <= 1'b0;
+		end
+		else
+		begin	
+			q1 <= 1'b1;
+			q <= q1;
+		end
+	end
+endmodule
+```
+
+Synthesis Command:
+```
+sudo -i
+cd /home/shruti-chaturvedi/VLSI/sky130RTLDesignAndSynthesisWorkshop/verilog_files
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog dff_const5.v
+synth -top dff_const5
+```
+
+![Screenshot from 2024-10-22 02-56-51](https://github.com/user-attachments/assets/756f075d-7162-43bb-b81e-88ee031096d1)
+
+Generate netlist and create graphical representation:
+```
+dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show
+```
+
+![Screenshot from 2024-10-22 02-58-31](https://github.com/user-attachments/assets/f8d744f9-b2a2-4ac2-a3c3-6ae8fa4c84b4)
+
+This module defines a D flip-flop that resets both q and q1 to 0 on a positive edge of reset. On each clock cycle, it sets q1 to 1 and then updates q with the value of q1 (which will always be 1 after the first cycle).
+
+When synthesized, the design will result in a flip-flop where q is always 1 after the first clock cycle post-reset.
 
 
+### 6. Counter Optimization 1
+
+Verilog Code:
+```
+module counter_opt (input clk, input reset, output q);
+	reg [2:0] count;
+	assign q = count[0];
+	
+	always @(posedge clk,posedge reset)
+	begin
+		if(reset)
+			count <= 3'b000;
+		else
+			count <= count + 1;
+	end
+endmodule
+```
+
+Synthesis Command:
+```
+sudo -i
+cd /home/shruti-chaturvedi/VLSI/sky130RTLDesignAndSynthesisWorkshop/verilog_files
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog counter_opt.v
+synth -top counter_opt
+```
+
+![Screenshot from 2024-10-22 03-03-07](https://github.com/user-attachments/assets/1963c42c-0f45-4d0b-8801-76f1ef58d8ef)
+
+Generate netlist and create graphical representation:
+```
+dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show
+```
+
+![Screenshot from 2024-10-22 03-05-05](https://github.com/user-attachments/assets/7839186d-0fb2-4cb1-8464-c365cca8a7c7)
+
+### 7. Counter Optimization 2
+
+Verilog Code:
+```
+module counter_opt2 (input clk, input reset, output q);
+	reg [2:0] count;
+	assign q = (count[2:0] == 3'b100);
+	
+	always @(posedge clk,posedge reset)
+	begin
+		if(reset)
+			count <= 3'b000;
+		else
+			count <= count + 1;
+	end
+endmodule
+```
+
+Synthesis Command:
+```
+sudo -i
+cd /home/shruti-chaturvedi/VLSI/sky130RTLDesignAndSynthesisWorkshop/verilog_files
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog counter_opt2.v
+synth -top counter_opt2
+```
+
+Generate netlist and create graphical representation:
+```
+dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show
+```
+
+![image](https://github.com/user-attachments/assets/85f1afaf-303e-4e5c-b87a-d7eb02db2ded)
+
+</details>
+
+<details>
+<summary> <h2> DAY 4: GLS, blocking vs non-blocking and Synthesis-Simulation mismatch </summary>
+
+### TASK 1: Gate Level Synthesis, Synthesis-Simulation mismatch and Blocking/Non-Blocking statements
+
+#### Gate-Level Synthesis
+
+GLS is the process of converting a high-level hardware description language (HDL) design (such as Verilog or VHDL) into a gate-level netlist that represents the circuit in terms of basic logic gates like AND, OR, NAND, NOR, flip-flops, etc.
+
+In GLS, we run test bench with netlist as the Design under test instead of the RTL code. Basically, Netlist is logically equal to RTL code as the netlist is obtained by converting RTL code into standard cell gates. We will use GLS to verify the logical correctness of design after synthesis and also to ensure the timing of the design is met. (run with delay annotations.)
+
+#### Why GLS?
+
+To verify the logical correctness of the design after synthesis. Ensuring the timing of the design is met -- For this GLS needs to run with delay annotation.
+
+#### GLS using IVERILOG
+
+Below picture gives an insight of the procedure. Here while using iverilog, we also include gate level verilog models to generate GLS simulation.
+
+![image](https://github.com/user-attachments/assets/c39ad9e0-a0e1-4ea0-946d-d07dd526ff30)
+
+#### Synthesis and Simulation Mismatch
+
+These can happen because of some reasons and few of the are:
+
+1. Missing Sensitivity List
+2. Blocking vs Non-Blocking assignments
+3. Non-standard verilog coding
+
+To avoid the synthesis and simulation mismatch. It is very important to check the behaviour of the circuit first and then match it with the expected output seen in simulation and make sure there are no synthesis and simulation mismatches. This is why we use GLS.
+
+#### Blocking vs Non-Blocking Assignments
+
+Blocking statements execute the statemetns in the order they are written inside the always block. Non-Blocking statements execute all the RHS and once always block is entered, the values are assigned to LHS. This will give mismatch as sometimes, improper use of blocking statements can create latches.
+
+## TASK 2: Labs on GLS and Synthesis-Simulation Mismatch
+
+#### EXAMPLE 1:  2 x 1 MUX using ternary operator
+
+Verilog Code:
+```
+module ternary_operator_mux (input i0 , input i1 , input sel , output y);
+assign y = sel?i1:i0;
+endmodule
+```
+
+Steps for Simulation:
+```
+iverilog ternary_operator_mux.v tb_ternary_operator_mux.v
+./a.out
+gtkwave tb_ternary_operator_mux.vcd
+```
+
+![Screenshot from 2024-10-22 03-32-17](https://github.com/user-attachments/assets/ddefc855-72db-4a6b-b8db-896959acfe64)
+
+Synthesis Commands:
+```
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog ternary_operator_mux.v
+synth -top ternary_operator_mux
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show
+```
+
+![Screenshot from 2024-10-22 03-37-15](https://github.com/user-attachments/assets/7a7474a1-3308-4635-9829-fb6a3c873e56)
+
+Commands for netlist:
+```
+write_verilog -noattr ternary_operator_mux_net.v
+!gvim ternary_operator_mux_net.v
+```
+
+![Screenshot from 2024-10-22 03-40-10](https://github.com/user-attachments/assets/47e45d54-d3f7-42bf-aad9-99b4d22c23fb)
+
+Commands for netlist simulation:
+```
+iverilog ../my_lib/verilog_module/primitives.v ../my_lib/verilog_module/sky130_fd_sc_hd.v ternary_operator_mux_net.v tb_ternary_operator_mux.v
+./a.out
+gtkwave tb_ternary_operator_mux.vcd
+```
+
+![image](https://github.com/user-attachments/assets/861c603b-0ff0-4afb-bffb-d7378594a344)
+
+These waveforms correspond to the GATE LEVEL SYNTHESIS for the Ternary Operator MUX.
+
+#### EXAMPLE 2:  Design of a 2:1 Bad MUX
+
+Verilog Code:
+```
+module bad_mux(input i0, input i1, input sel, output reg y);
+	always@(sel)
+	begin
+		if(sel)
+			y <= i1;
+		else
+			y <= i0;
+	end
+endmodule
+```
+
+Steps for Simulation:
+```
+iverilog bad_mux.v tb_bad_mux.v
+./a.out
+gtkwave tb_bad_mux.vcd
+```
+
+![Screenshot from 2024-10-22 03-49-42](https://github.com/user-attachments/assets/0bc0132f-f9b9-4599-8df0-8b75399a553b)
+
+Synthesis Commands:
+```
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog bad_mux.v
+synth -top bad_mux
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib 
+show
+```
+
+![Screenshot from 2024-10-22 03-54-23](https://github.com/user-attachments/assets/a4bf1985-34e4-4295-b1d3-0de8d8e4e028)
+
+Commands for netlist:
+```
+write_verilog -noattr bad_mux_net.v
+!gvim bad_mux_net.v
+```
+
+![Screenshot from 2024-10-22 03-56-56](https://github.com/user-attachments/assets/cdc14d04-de77-41dc-9feb-7ca89f4da8c6)
+
+
+Commands for netlist simulation:
+```
+iverilog ../my_lib/verilog_module/primitives.v ../my_lib/verilog_module/sky130_fd_sc_hd.v bad_mux_net.v tb_bad_mux.v
+./a.out
+gtkwave tb_bad_mux.vcd
+```
+
+![image](https://github.com/user-attachments/assets/a9dd247a-1cc8-4fe7-ad3c-34cb2ae6ebb8)
+
+These waveforms correspond to the GATE LEVEL SYNTHESIS for the Bad MUX.
+
+## TASK 3: Labs on synth-sim mismatch for blocking statement
+
+#### EXAMPLE:  Blocking Caveat
+
+Verilog Code:
+```
+module blocking_caveat (input a , input b , input  c, output reg d); 
+reg x;
+always @ (*)
+	begin
+	d = x & c;
+	x = a | b;
+end
+endmodule
+```
+
+Steps for Simulation:
+```
+iverilog blocking_caveat.v tb_blocking_caveat.v
+./a.out
+gtkwave tb_blocking_caveat.vcd
+```
+
+![Screenshot from 2024-10-22 04-08-24](https://github.com/user-attachments/assets/5ee0844d-1436-4b7f-a47f-6658125aa5ca)
+
+As depicted, when A and B go zero, the OR gate output should be zero (X equal to zero), and the AND gate output should also be zero (same as D output). But, the AND gate input of X takes the previous value of A|B equal to one, based on the design created by the blocking statement, hence the discrepancy in the output.
+
+Synthesis Commands:
+```
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog blocking_caveat.v
+synth -top blocking_caveat
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show
+```
+
+![Screenshot from 2024-10-22 04-19-22](https://github.com/user-attachments/assets/deb09e35-69c9-432b-86be-80bde6a41bbc)
+
+Commands for netlist:
+```
+write_verilog -noattr blocking_caveat_net.v
+!gvim blocking_caveat_net.v
+```
+
+![Screenshot from 2024-10-22 04-21-07](https://github.com/user-attachments/assets/2cce787a-022e-49da-ae66-7702584b6143)
+
+Commands for netlist simulation:
+```
+iverilog ../my_lib/verilog_module/primitives.v ../my_lib/verilog_module/sky130_fd_sc_hd.v blocking_caveat_net.v tb_blocking_caveat.v
+./a.out
+gtkwave tb_blocking_caveat.vcd
+```
+
+![image](https://github.com/user-attachments/assets/efdac88a-4d25-40ab-a7d4-16f5ed785766)
+
+#### Synthesis Simultaion mismatch
+
+![image](https://github.com/user-attachments/assets/9cc8e983-55e1-4e7f-b377-e58c89e74481)
+
+In the second wave window, the netlist simulation demonstrates the correct functioning of the DUT (Design Under Test). In contrast, the first image shows improper behavior of the DUT due to the use of a blocking statement, leading to a synthesis-simulation mismatch. This issue is resolved by performing Gate-Level Simulation (GLS), which verifies the correct behavior in the netlist simulation.
 
 </details>
