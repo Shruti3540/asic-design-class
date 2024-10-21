@@ -2382,7 +2382,6 @@ write_verilog -noattr good_mux_netlist.v
 ![Screenshot from 2024-10-21 18-54-33](https://github.com/user-attachments/assets/d461cda1-cd01-4449-8c45-4a6fb6169111)
 
 </details>
-
 </details>
 
 
