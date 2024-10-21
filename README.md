@@ -2952,6 +2952,108 @@ module tb_dff_const1;
 endmodule
 ```
 
+Command:
+```
+sudo -i
+cd /home/shruti-chaturvedi/VLSI/sky130RTLDesignAndSynthesisWorkshop/verilog_files
+iverilog dff_const1.v tb_dff_const1.v
+ls
+./a.out
+gtkwave tb_dff_const1.vcd
+```
+
+Resultant Waveform:
+
+![Screenshot from 2024-10-22 01-46-01](https://github.com/user-attachments/assets/af5226df-dba0-42e3-be6f-ba4916e0c519)
+
+From the waveform, it can be observed that the Q output is always high when reset is zero, and reset doesn't depend on clock edge.
+
+Synthesis Command:
+```
+sudo -i
+cd /home/shruti-chaturvedi/VLSI/sky130RTLDesignAndSynthesisWorkshop/verilog_files
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog dff_const1.v
+synth -top dff_const1
+```
+
+![Screenshot from 2024-10-22 01-51-33](https://github.com/user-attachments/assets/262e3f5f-f939-4c9c-9856-62abdefe4b20)
+
+Generate netlist and create graphical representation:
+```
+dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show
+```
+
+![Screenshot from 2024-10-22 01-53-59](https://github.com/user-attachments/assets/28d0420d-aa2b-4f26-acfd-f198fff24b4a)
+
+Since reset doesn't depend on clock edge, therefore the D Flip Flop has not been removed.
+
+### 2. D-Flipflop Constant 2 with Asynchronous Reset (active high):
+
+Verilog Code:
+```
+module dff_const1(input clk, input reset, output reg q); 
+always @(posedge clk, posedge reset)
+begin
+	if(reset)
+		q <= 1'b1;
+	else
+		q <= 1'b1;
+end
+endmodule
+```
+
+Testbench:
+```
+module tb_dff_const2; 
+	reg clk, reset;
+	wire q;
+
+	dff_const2 uut (.clk(clk),.reset(reset),.q(q));
+
+	initial begin
+		$dumpfile("tb_dff_const1.vcd");
+		$dumpvars(0,tb_dff_const1);
+		// Initialize Inputs
+		clk = 0;
+		reset = 1;
+		#3000 $finish;
+	end
+
+	always #10 clk = ~clk;
+	always #1547 reset=~reset;
+endmodule
+```
+
+Command:
+```
+sudo -i
+cd /home/shruti-chaturvedi/VLSI/sky130RTLDesignAndSynthesisWorkshop/verilog_files
+iverilog dff_const2.v tb_dff_const2.v
+ls
+./a.out
+gtkwave tb_dff_const2.vcd
+```
+
+Resultant Waveform:
+
+![Screenshot from 2024-10-22 02-01-45](https://github.com/user-attachments/assets/98ff21ad-895d-4ddf-a12c-00eac45b39b3)
+
+From the waveform, it can be observed that the Q output is always high irrespective of reset.
+
+Synthesis Command:
+```
+sudo -i
+cd /home/shruti-chaturvedi/VLSI/sky130RTLDesignAndSynthesisWorkshop/verilog_files
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog dff_const2.v
+synth -top dff_const2
+```
+
+
 
 
 </details>
