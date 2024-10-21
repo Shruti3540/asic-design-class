@@ -2385,8 +2385,10 @@ write_verilog -noattr good_mux_netlist.v
 
 </details>
 
+
 <details>
 <summary> <h2> DAY 2: Timing libs, hierarchical vs flat synthesis and efficient flop coding styles </summary>
+
 
 <details>
 <summary> <h4>TASK 1: Introduction to dot lib: </summary>
@@ -2422,6 +2424,7 @@ Different types of AND gates:
 
 <details>
 <summary> <h4> TASK 2: Hierarchical vs Flat Synthesis: </summary>
+	
 #### Hierarchial Synthesis: Hierarchical synthesis in physical design involves breaking down the entire chip design into smaller, manageable modules or blocks. Each module is designed and optimized separately, and then these modules are integrated at a higher level to create the complete chip layout. This approach allows for better control over the design process, reduces complexity, and enables efficient reuse of standardized blocks. All the modules are preserved.
 
 Commands:
@@ -3303,7 +3306,10 @@ show
 ![image](https://github.com/user-attachments/assets/85f1afaf-303e-4e5c-b87a-d7eb02db2ded)
 
 </details>
+
+
 </details>
+
 
 <details>
 <summary> <h2> DAY 4: GLS, blocking vs non-blocking and Synthesis-Simulation mismatch </summary>
