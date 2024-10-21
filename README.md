@@ -2409,10 +2409,120 @@ Different types of AND gates:
 ![Screenshot from 2024-10-21 20-19-51](https://github.com/user-attachments/assets/99583e36-12bb-4ee4-891c-797435733758)
 
 ### TASK 2: Hierarchical vs Flat Synthesis:
-Hierarchial Synthesis: Hierarchical synthesis in physical design involves breaking down the entire chip design into smaller, manageable modules or blocks. Each module is designed and optimized separately, and then these modules are integrated at a higher level to create the complete chip layout. This approach allows for better control over the design process, reduces complexity, and enables efficient reuse of standardized blocks. All the modules are preserved.
+#### Hierarchial Synthesis: Hierarchical synthesis in physical design involves breaking down the entire chip design into smaller, manageable modules or blocks. Each module is designed and optimized separately, and then these modules are integrated at a higher level to create the complete chip layout. This approach allows for better control over the design process, reduces complexity, and enables efficient reuse of standardized blocks. All the modules are preserved.
 
-Flat Synthesis: Flat synthesis in physical design involves designing the entire chip layout as a single, monolithic entity without explicit hierarchical divisions. This approach treats the entire design as a cohesive unit, potentially resulting in a simpler layout. It flattens out the modules into gates with higher efficiency and performance.
+Commands:
+ 
+```
+cd /home/shruti-chaturvedi/VLSI/sky130RTLDesignAndSynthesisWorkshop/verilog_files
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog multiple_modules.v
+```
 
+![Screenshot from 2024-10-21 21-49-25](https://github.com/user-attachments/assets/2ae655e0-f8ec-4731-8d6a-aa8d9d9683cb)
 
+To synthesize the design:
+```
+synth -top multiple_modules
+```
+
+![Screenshot from 2024-10-21 21-58-43](https://github.com/user-attachments/assets/8f16ec8f-acfe-4c89-9989-038197118550)
+
+```
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show multiple_modules
+```
+
+![Screenshot from 2024-10-21 22-03-17](https://github.com/user-attachments/assets/9e11bc2c-4688-4bca-bb1a-1790142b04f1)
+
+Now Generate the Netlist:
+```
+write_verilog -noattr multiple_modules_hier.v
+!gvim multiple_modules_hier.v
+```
+
+![Screenshot from 2024-10-21 22-13-31](https://github.com/user-attachments/assets/d549a557-6495-4d8f-ac0b-f5b308092a55)
+
+#### Flat Synthesis: Flat synthesis in physical design involves designing the entire chip layout as a single, monolithic entity without explicit hierarchical divisions. This approach treats the entire design as a cohesive unit, potentially resulting in a simpler layout. It flattens out the modules into gates with higher efficiency and performance.
+
+```
+flatten
+show
+```
+
+![Screenshot from 2024-10-21 22-19-54](https://github.com/user-attachments/assets/2418482c-1c10-4969-b9f8-bbd3d1925e0f)
+
+Now Generate the Netlist:
+```
+write_verilog -noattr multiple_modules_hier.v
+!gvim multiple_modules_hier.v
+```
+
+![Screenshot from 2024-10-21 22-22-27](https://github.com/user-attachments/assets/163440fe-2ea4-42bf-81b6-1496856fd60c)
+
+### TASK 3: Various Flop Coding Styles and optimization:
+
+Why do we use flip-flops?
+
+There is a propogation delay in combinational circuits, there is a glitch in the output due to this delay. More the amount of combinational circuits, more is the number of glitches we see. So to overcome this problem in the output of a circuit, we introduce a storage element, a flop, in between the combinational circuits which gives a stable output always.This is because a flop is triggered only on the positive edge of the clock.
+
+Initialisation of the flop is done with the control pins on the flop which are reset/set.
+
+Performing simulations for 3 types of D-Flipflops:
+
+- Asynchronous Reset
+- Asynchronous Set
+- Synchronous Reset.
+
+1. Asynchronous reset:
+
+Irrespective of the clk signal, if the reset value is high, flop output comes down to zero.
+
+Verilog code describing D flop with asynchronous reset which is positive edge triggered:
+```
+module dff_asyncres(input clk, input async_reset, input d, output reg q);
+	always@(posedge clk, posedge async_reset)
+	begin
+		if(async_reset)
+			q <= 1'b0;
+		else
+			q <= d;
+	end
+endmodule
+```
+Testbench:
+```
+module tb_dff_asyncres; 
+	reg clk, async_reset, d;
+	wire q;
+	dff_asyncres uut (.clk(clk),.async_reset (async_reset),.d(d),.q(q));
+
+	initial begin
+		$dumpfile("tb_dff_asyncres.vcd");
+		$dumpvars(0,tb_dff_asyncres);
+		// Initialize Inputs
+		clk = 0;
+		async_reset = 1;
+		d = 0;
+		#3000 $finish;
+	end
+		
+	always #10 clk = ~clk;
+	always #23 d = ~d;
+	always #547 async_reset=~async_reset; 
+endmodule
+```
+Commands in order to see the waveform:
+```
+sudo -i
+cd /home/shruti-chaturvedi/VLSI/sky130RTLDesignAndSynthesisWorkshop/verilog_files
+iverilog dff_asyncres.v tb_dff_asyncres.v
+ls
+./a.out
+gtkwave tb_dff_asyncres.vcd
+```
+
+![Screenshot from 2024-10-21 22-45-19](https://github.com/user-attachments/assets/24a6d010-da60-400c-887c-d269dd0e5749)
 
 </details>
