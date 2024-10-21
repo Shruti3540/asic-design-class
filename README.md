@@ -2228,8 +2228,102 @@ gtkwave pre_synth_sim.vcd
 
 
 <details>
-  <summary>LAB 10: Tools installations (DAY 0) </summary>
+  <summary>LAB 10: </summary>
 
-# **LAB SESSION 10:**
+  
+  <details>
+<summary> <h2> DAY 0: Tools Installation </summary>
+    
 To continue with the labs we need to install the required tools using the following commands:
 
+```
+sudo -i
+sudo apt-get install git
+ls
+cd /home/shruti-chaturvedi
+mkdir VLSI
+cd VLSI
+git clone https://github.com/kunalg123/sky130RTLDesignAndSynthesisWorkshop.git
+cd sky130RTLDesignAndSynthesisWorkshop/verilog_files
+ls
+```
+The following directories can be observed:
+
+![Screenshot from 2024-10-21 16-12-49](https://github.com/user-attachments/assets/a0746c16-7f29-4377-968e-819f9bb64f3c)
+
+</details>
+
+<details>
+<summary> <h2> DAY 1: Introduction to Verilog RTL design and Synthesis </summary>
+
+### TASK 1: Introduxtion to iVerilog and GTKWave:
+iverilog: Iverilog is an open-source Verilog simulation and synthesis tool that is commonly used for designing and verifying digital circuits described in the Verilog hardware description language (HDL).
+
+GTKwave: GTKWave is a popular open-source waveform viewer that allows to visualize and analyze digital signal waveforms generated during simulations of digital circuits. It is often used in conjunction with simulation tools like IVERILOG to provide a graphical representation of how signals change over time in a digital design.
+
+![image](https://github.com/user-attachments/assets/d7447081-a288-4473-9605-b00c5784f5c1)
+
+The lab involved learning simulation of a ' 2:1 MULTIPLEXER ' using IVerilog and GTKWave.
+```
+//mux
+module good_mux (input i0 , input i1 , input sel , output reg y);
+always @ (*)
+begin
+ if(sel)
+        y <= i1;
+ else
+        y <= i0;
+end
+endmodule
+
+//testbench
+`timescale 1ns / 1ps
+    module tb_good_mux;
+    reg i0,i1,sel;
+    wire y;
+
+    // Instantiate the Unit Under Test (UUT)
+    good_mux uut (.sel(sel),.i0(i0),.i1(i1),.y(y));
+
+    initial begin
+    $dumpfile("tb_good_mux.vcd");
+    $dumpvars(0,tb_good_mux);
+    // Initialize Inputs
+    sel = 0;
+    i0 = 0;
+    i1 = 0;
+    #300 $finish;
+    end
+
+    always #75 sel = ~sel;
+    always #10 i0 = ~i0;
+    always #55 i1 = ~i1;
+    endmodule
+```
+
+The commands to simulate the design is as follows:
+```
+iverilog good_mux.v tb_good_mux.v
+./a.out
+gtkwave tb_good_mux.vcd
+```
+![Screenshot from 2024-10-21 17-27-47](https://github.com/user-attachments/assets/5116760b-5c90-4080-a7c7-befbd82ddd12)
+
+Generated output waveform:
+
+![Screenshot from 2024-10-21 17-30-42](https://github.com/user-attachments/assets/ff0894e0-b811-4e24-a9c6-7e1da9ad68fb)
+
+### TASK 2: Introduction to Yosys and Logic synthesis:
+Synthesis: Synthesis is nothing but conversion of RTL design which is writeen in verilog or any other HDL into the netlist which gives the interconnection of components.The netlist is then supposed to perform the same function as the corresponding HDL code. Synthesizer is the tool which convert RTL design into the netlist form. One of such tool is Yosys.
+
+Yosys: Yosys aims to converting high-level hardware descriptions into optimized gate-level representations that can be targeted for various FPGA and ASIC technologies. The flow for yosys is we feed the yosys with the design which is in RTL level and the .lib file which contain standard library cells then the yosys synthesizes and gives us the netlist file.
+
+#### Flow of yosys synthesis:
+![image](https://github.com/user-attachments/assets/1ef77741-44c9-41f5-a71e-b5e8be28f340)
+
+#### Synthesis verification:
+![image](https://github.com/user-attachments/assets/8706dcb7-0d1b-4236-b3d7-5683f36fc2d8)
+
+
+  
+</details>
