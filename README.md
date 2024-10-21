@@ -2221,5 +2221,15 @@ gtkwave pre_synth_sim.vcd
 6) OUT is the DAC output signal.
 
 
+</details>
 
+
+***
+
+
+<details>
+  <summary>LAB 10: Tools installations (DAY 0) </summary>
+
+# **LAB SESSION 10:**
+To continue with the labs we need to install the required tools using the following commands:
 
