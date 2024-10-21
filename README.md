@@ -2324,6 +2324,95 @@ Yosys: Yosys aims to converting high-level hardware descriptions into optimized 
 #### Synthesis verification:
 ![image](https://github.com/user-attachments/assets/8706dcb7-0d1b-4236-b3d7-5683f36fc2d8)
 
+Commands for yosys:
 
-  
+1. Opens Yosys Tool
+```
+yosys
+```
+2. Reads the technology library file (Liberty format) required for synthesis using the specified path.
+```
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib      
+```
+3. Reads the Verilog file good_mux.v for synthesis.
+```
+read_verilog good_mux.v
+```
+![Screenshot from 2024-10-21 18-37-48](https://github.com/user-attachments/assets/c9f2ede2-2169-4849-a9c4-d322138db1ad)
+
+4. Synthesize the top level module
+```
+synth -top good_mux     
+```
+![Screenshot from 2024-10-21 18-38-07](https://github.com/user-attachments/assets/97a3a1fd-a789-47a4-94c2-146e4f89a516)
+![Screenshot from 2024-10-21 18-40-23](https://github.com/user-attachments/assets/8eb35125-f221-4c37-8678-f4cd7bc34d1f)
+
+5. Map to the standard library
+```
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+```
+![Screenshot from 2024-10-21 18-40-38](https://github.com/user-attachments/assets/d10ae228-a6ac-43d9-b7d3-85f1b31bcbd1)
+![Screenshot from 2024-10-21 18-40-57](https://github.com/user-attachments/assets/1061cb39-3226-4d75-85d7-8926b6e1b90e)
+
+6. Displays the synthesized design as a schematic.
+```
+show
+```
+7. Writes the synthesized netlist to the file good_mux_netlist.v without attributes.
+```
+write_verilog -noattr good_mux_netlist.v
+```
+
+![Screenshot from 2024-10-21 18-49-34](https://github.com/user-attachments/assets/d742fecd-3aee-4395-8571-bec6b84a71d1)
+![Screenshot from 2024-10-21 18-50-11](https://github.com/user-attachments/assets/885e6d59-23de-42ea-bfc7-41c385add05c)
+
+8. Opens the netlist file good_mux_netlist.v.
+```
+!gvim good_mux_netlist.v
+```
+
+![Screenshot from 2024-10-21 18-54-06](https://github.com/user-attachments/assets/9a6c672e-f343-49c0-a064-2110372b2e96)
+![Screenshot from 2024-10-21 18-54-33](https://github.com/user-attachments/assets/d461cda1-cd01-4449-8c45-4a6fb6169111)
+
+</details>
+
+<details>
+<summary> <h2> DAY 2: Timing libs, hierarchical vs flat synthesis and efficient flop coding styles </summary>
+
+### TASK 1: Introduction to dot lib:
+'.lib' is like a collection of standard cells. It contains slow cells, fast cells and many more things. In order to view the '.lib' files, Enter the following command :
+
+```
+sudo -i
+cd /home/chandra-shekhar-jha/VLSI/sky130RTLDesignAndSynthesisWorkshop/lib
+gvim sky130_fd_sc_hd__tt_025C_1v80.lib
+```
+
+![Screenshot from 2024-10-21 19-38-39](https://github.com/user-attachments/assets/028dc3fd-66d6-43d7-beb7-99f92d95b218)
+
+The `.lib` file contains essential information about the manufacturing process used (e.g., 130nm technology) and process conditions, including temperature, voltage, and other factors. It also outlines various constraints, such as the units for different variables and the specific technology type. For instance:
+
+- `technology("cmos")`: Specifies that the technology is CMOS.
+- `delay_model : "table_lookup"`: Defines the delay model used.
+- `bus_naming_style : "%s[%d]"`: Sets the naming convention for buses.
+- `time_unit : "1ns"`: Defines the unit of time.
+- `voltage_unit : "1V"`: Specifies the voltage unit.
+- `leakage_power_unit : "1nW"`: Sets the unit for leakage power.
+- `current_unit : "1mA"`: Defines the current unit.
+- `pulling_resistance_unit : "1kohm"`: Specifies the pulling resistance unit.
+- `capacitive_load_unit(1.0000000000, "pf")`: Sets the unit for capacitive load.
+
+Additionally, the `.lib` file provides detailed characteristics for various cells, including information about leakage power, power consumption, area, input capacitance, and delay based on different input conditions.
+
+Different types of AND gates:
+
+![Screenshot from 2024-10-21 20-19-51](https://github.com/user-attachments/assets/99583e36-12bb-4ee4-891c-797435733758)
+
+### TASK 2: Hierarchical vs Flat Synthesis:
+Hierarchial Synthesis: Hierarchical synthesis in physical design involves breaking down the entire chip design into smaller, manageable modules or blocks. Each module is designed and optimized separately, and then these modules are integrated at a higher level to create the complete chip layout. This approach allows for better control over the design process, reduces complexity, and enables efficient reuse of standardized blocks. All the modules are preserved.
+
+Flat Synthesis: Flat synthesis in physical design involves designing the entire chip layout as a single, monolithic entity without explicit hierarchical divisions. This approach treats the entire design as a cohesive unit, potentially resulting in a simpler layout. It flattens out the modules into gates with higher efficiency and performance.
+
+
+
 </details>
