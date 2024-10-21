@@ -2469,13 +2469,13 @@ There is a propogation delay in combinational circuits, there is a glitch in the
 
 Initialisation of the flop is done with the control pins on the flop which are reset/set.
 
-Performing simulations for 3 types of D-Flipflops:
+### Simulation of D-Flipflop using Iverilog and GTKWave. Performing simulations for 3 types of D-Flipflops:
 
 - Asynchronous Reset
 - Asynchronous Set
-- Synchronous Reset.
+- Synchronous Reset
 
-1. Asynchronous reset:
+#### 1. Asynchronous reset:
 
 Irrespective of the clk signal, if the reset value is high, flop output comes down to zero.
 
@@ -2524,5 +2524,434 @@ gtkwave tb_dff_asyncres.vcd
 ```
 
 ![Screenshot from 2024-10-21 22-45-19](https://github.com/user-attachments/assets/24a6d010-da60-400c-887c-d269dd0e5749)
+
+From the waveform, it can be observed that the Q output changes to zero when the asynchronous reset is set high, independent of the positive/negative clock edge.
+
+#### 2. Asynchronous set:
+
+Verilog code describing D flop with asynchronous set:
+```
+module dff_async_set(input clk, input async_set, input d, output reg q);
+	always@(posedge clk, posedge async_set)
+	begin
+		if(async_set)
+			q <= 1'b1;
+		else
+			q <= d;
+	end
+endmodule
+```
+Testbench:
+```
+module tb_dff_async_set; 
+	reg clk, async_set, d;
+	wire q;
+	dff_async_set uut (.clk(clk),.async_set (async_set),.d(d),.q(q));
+
+	initial begin
+		$dumpfile("tb_dff_async_set.vcd");
+		$dumpvars(0,tb_dff_async_set);
+		// Initialize Inputs
+		clk = 0;
+		async_set = 1;
+		d = 0;
+		#3000 $finish;
+	end
+		
+	always #10 clk = ~clk;
+	always #23 d = ~d;
+	always #547 async_set=~async_set; 
+endmodule
+```
+Commands in order to see the waveform:
+```
+sudo -i
+cd /home/shruti-chaturvedi/VLSI/sky130RTLDesignAndSynthesisWorkshop/verilog_files
+iverilog dff_async_set.v tb_dff_async_set.v
+ls
+./a.out
+gtkwave tb_dff_async_set.vcd
+```
+
+![Screenshot from 2024-10-21 23-37-07](https://github.com/user-attachments/assets/da3a2d20-e76c-4c49-99d6-48ac309147b1)
+
+From the waveform, it can be observed that the Q output changes to one when the asynchronous set is set high, independent of the positive/negative clock edge.
+
+#### 3. Synchronous Reset:
+
+Verilog code describing D flop with synchronous reset:
+```
+module dff_syncres(input clk, input sync_reset, input d, output reg q);
+	always@(posedge clk)
+	begin
+		if(sync_reset)
+			q <= 1'b0;
+		else
+			q <= d;
+	end
+endmodule
+```
+Testbench:
+```
+module tb_dff_syncres; 
+	reg clk, syncres, d;
+	wire q;
+	dff_asyncres uut (.clk(clk),.sync_reset (sync_reset),.d(d),.q(q));
+
+	initial begin
+		$dumpfile("tb_dff_syncres.vcd");
+		$dumpvars(0,tb_dff_syncres);
+		// Initialize Inputs
+		clk = 0;
+		sync_reset = 1;
+		d = 0;
+		#3000 $finish;
+	end
+		
+	always #10 clk = ~clk;
+	always #23 d = ~d;
+	always #547 sync_reset=~async_reset; 
+endmodule
+```
+Commands in order to see the waveform:
+```
+sudo -i
+cd /home/shruti-chaturvedi/VLSI/sky130RTLDesignAndSynthesisWorkshop/verilog_files
+iverilog dff_syncres.v tb_dff_syncres.v
+ls
+./a.out
+gtkwave tb_dff_syncres.vcd
+```
+
+![Screenshot from 2024-10-21 23-52-24](https://github.com/user-attachments/assets/f3c1d017-b58c-4f7e-ae2d-2d7d53619875)
+
+From the waveform, it can be observed that the Q output changes to zero when the synchronous reset is set high, only at the positive clock edge.
+
+### Synthesis of Various D-Flipflop using Yosys. Performing simulations for 3 types of D-Flipflops
+
+- Asynchronous Reset
+- Asynchronous Set
+- Synchronous Reset
+
+#### 1. Asynchronous reset:
+
+Commands:
+```
+cd /home/shruti-chaturvedi/VLSI/sky130RTLDesignAndSynthesisWorkshop/verilog_files
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog dff_asyncres.v
+synth -top dff_asyncres
+dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show
+```
+
+![Screenshot from 2024-10-22 00-00-05](https://github.com/user-attachments/assets/aaa7a235-028f-4e09-965b-36b446b97723)
+
+#### 2. Asynchronous set:
+
+Commands:
+```
+cd /home/shruti-chaturvedi/VLSI/sky130RTLDesignAndSynthesisWorkshop/verilog_files
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog dff_async_set.v
+synth -top dff_async_set
+dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show
+```
+
+![Screenshot from 2024-10-22 00-12-36](https://github.com/user-attachments/assets/a09e3a17-e6af-47dd-928a-ba5f025acbb7)
+
+#### 3. Synchronous reset:
+
+Commands:
+```
+cd /home/shruti-chaturvedi/VLSI/sky130RTLDesignAndSynthesisWorkshop/verilog_files
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog dff_syncres.v
+synth -top dff_syncres
+dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show
+```
+
+![Screenshot from 2024-10-22 00-18-08](https://github.com/user-attachments/assets/0e38001a-90f2-4f13-9ebd-b958d8742746)
+
+</details>
+
+
+<details>
+<summary> <h2> DAY 3: Combinational and sequential optmizations </summary>
+
+### TASK 1: Optimization of various Combinational Designs:
+
+Optimization of various Combinational Designs
+
+- 2 input AND gate.
+- 2 input OR gate.
+- 3 input AND gate.
+- 2 input XNOR Gate (3 input Boolean Logic)
+- Multiple Module Optimization-1
+- Multiple Module Optimization-2
+
+### 1. 2 Input AND Gate:
+
+Verilog Code:
+```
+module opt_check(input a, input b, output y);
+	assign y = a?b:0;
+endmodule
+```
+
+Command:
+```
+sudo -i
+cd /home/shruti-chaturvedi/VLSI/sky130RTLDesignAndSynthesisWorkshop/verilog_files
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog opt_check.v
+synth -top opt_check
+```
+
+![Screenshot from 2024-10-22 00-38-27](https://github.com/user-attachments/assets/bcfb80f0-417b-449e-bb0a-45e74fee1afe)
+
+Generate netlist and create graphical representation:
+```
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+opt_clean -purge
+show
+```
+
+![Screenshot from 2024-10-22 00-43-31](https://github.com/user-attachments/assets/a4530fac-6c93-43b6-ae0a-d2b3ef39dd41)
+
+### 2. 2 Input OR Gate:
+
+Verilog Code:
+```
+module opt_check2(input a, input b, output y);
+	assign y = a?1:b;
+endmodule
+```
+
+Command:
+```
+sudo -i
+cd /home/shruti-chaturvedi/VLSI/sky130RTLDesignAndSynthesisWorkshop/verilog_files
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog opt_check2.v
+synth -top opt_check2
+```
+
+![Screenshot from 2024-10-22 00-48-10](https://github.com/user-attachments/assets/df3532b6-7034-4c0e-9d9f-aee34d1220fb)
+
+Generate netlist and create graphical representation:
+```
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+opt_clean -purge
+show
+```
+
+![Screenshot from 2024-10-22 00-50-27](https://github.com/user-attachments/assets/3746bae9-6cee-46c2-bf65-711c61fd97c6)
+
+### 3. 3 Input AND Gate:
+
+Verilog Code:
+```
+module opt_check2(input a, input b, input c, output y);
+	assign y = a?(b?c:0):0;
+endmodule
+```
+
+Command:
+```
+sudo -i
+cd /home/shruti-chaturvedi/VLSI/sky130RTLDesignAndSynthesisWorkshop/verilog_files
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog opt_check3.v
+synth -top opt_check3
+```
+
+![Screenshot from 2024-10-22 00-54-16](https://github.com/user-attachments/assets/790c13af-e87d-41c8-84e9-812cfafded34)
+
+
+Generate netlist and create graphical representation:
+```
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+opt_clean -purge
+show
+```
+
+![Screenshot from 2024-10-22 00-56-25](https://github.com/user-attachments/assets/dda93fc9-d187-45d0-a344-3913504237bb)
+
+
+### 4. 2 input XNOR Gate (3 input Boolean Logic):
+
+Verilog Code:
+```
+module opt_check2(input a, input b, input c, output y);
+	assign y = a ? (b ? ~c : c) : ~c;
+endmodule
+```
+
+Command:
+```
+sudo -i
+cd /home/shruti-chaturvedi/VLSI/sky130RTLDesignAndSynthesisWorkshop/verilog_files
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog opt_check4.v
+synth -top opt_check4
+```
+
+![Screenshot from 2024-10-22 00-59-32](https://github.com/user-attachments/assets/cceda327-a4f4-4b1d-82fa-1c06a7f9c6e7)
+
+Generate netlist and create graphical representation:
+```
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+opt_clean -purge
+show
+```
+
+![Screenshot from 2024-10-22 01-00-56](https://github.com/user-attachments/assets/20b19f70-2281-48b0-9103-dd8532caf441)
+
+### 5. Multiple Module Optimization-1:
+
+Verilog Code:
+```
+module sub_module1(input a, input b, output y);
+	assign y = a & b;
+endmodule
+
+module sub_module2 (input a, input b output y);
+	assign y = a^b;
+endmodule
+
+module multiple_module_opt(input a, input b input c, input d output y);
+	wire n1,n2, n3;
+
+	sub_module1 U1 (.a(a), .b(1'b1), .y(n1));
+	sub_module2 U2 (.a(n1), .b(1'b0), .y(n));
+	sub_module2 U3 (.a(b), .b(d), .y(n3));
+
+	assign y = c | (b & n1);
+endmodule
+```
+
+Command:
+```
+sudo -i
+cd /home/shruti-chaturvedi/VLSI/sky130RTLDesignAndSynthesisWorkshop/verilog_files
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog multiple_module_opt.v
+synth -top multiple_module_opt
+```
+
+![Screenshot from 2024-10-22 01-04-45](https://github.com/user-attachments/assets/ce96b513-49ed-4ead-9c76-690deb7b2c8f)
+
+Generate netlist and create graphical representation:
+```
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+opt_clean -purge
+flatten
+show
+```
+
+![Screenshot from 2024-10-22 01-08-29](https://github.com/user-attachments/assets/c9491732-f67a-42d8-a94f-31ad8b8f82b5)
+
+### 6. Multiple Module Optimization-2:
+
+Verilog Code:
+```
+module sub_module(input a input b output y);
+	assign y = a & b;
+endmodule
+
+module multiple_module_opt2(input a, input b input c, input d, output y);
+	wire n1,n2, n3;
+
+	sub_module U1 (.a(a), .b(1'b0), y(n));
+	sub_module U2 (.a(b), .b(c), .y(n2));
+	sub_module U3 (.a(n2), .b(d), .y(n));
+	sub_module U4 (.a(n3), .b(n1), .y(y));
+endmodule
+```
+
+Command:
+```
+sudo -i
+cd /home/shruti-chaturvedi/VLSI/sky130RTLDesignAndSynthesisWorkshop/verilog_files
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog multiple_module_opt2.v
+synth -top multiple_module_opt2
+```
+
+![Screenshot from 2024-10-22 01-12-34](https://github.com/user-attachments/assets/d290d891-9b1a-4c98-991f-bdf283631e5f)
+
+Generate netlist and create graphical representation:
+```
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+opt_clean -purge
+flatten
+show
+```
+
+![Screenshot from 2024-10-22 01-14-17](https://github.com/user-attachments/assets/13c6f0c4-f5c8-4c9d-938a-dcae6215fedd)
+
+
+### TASK 2: Optimization of various Sequential Designs:
+
+Optimization of various Sequential Designs
+
+- D-Flipflop Constant 1 with Asynchronous Reset (active low)
+- D-Flipflop Constant 2 with Asynchronous Reset (active high)
+- D-Flipflop Constant 3 with Synchronous Reset (active low)
+- D-Flipflop Constant 4 with Synchronous Reset (active high)
+- D-Flipflop Constant 5 with Synchronous Reset
+- Counter Optimization 1
+- Counter Optimization 2
+
+### 1. D-Flipflop Constant 1 with Asynchronous Reset (active low):
+
+Verilog Code:
+```
+module dff_const1(input clk, input reset, output reg q); 
+always @(posedge clk, posedge reset)
+begin
+	if(reset)
+		q <= 1'b0;
+	else
+		q <= 1'b1;
+end
+endmodule
+```
+
+Testbench:
+```
+module tb_dff_const1; 
+	reg clk, reset;
+	wire q;
+
+	dff_const1 uut (.clk(clk),.reset(reset),.q(q));
+
+	initial begin
+		$dumpfile("tb_dff_const1.vcd");
+		$dumpvars(0,tb_dff_const1);
+		// Initialize Inputs
+		clk = 0;
+		reset = 1;
+		#3000 $finish;
+	end
+
+	always #10 clk = ~clk;
+	always #1547 reset=~reset;
+endmodule
+```
+
+
 
 </details>
