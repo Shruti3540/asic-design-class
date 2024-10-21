@@ -2256,7 +2256,10 @@ The following directories can be observed:
 <details>
 <summary> <h2> DAY 1: Introduction to Verilog RTL design and Synthesis </summary>
 
-### TASK 1: Introduxtion to iVerilog and GTKWave:
+<details>
+<summary>
+ <h4> TASK 1: Introduxtion to iVerilog and GTKWave: </summary>
+
 iverilog: Iverilog is an open-source Verilog simulation and synthesis tool that is commonly used for designing and verifying digital circuits described in the Verilog hardware description language (HDL).
 
 GTKwave: GTKWave is a popular open-source waveform viewer that allows to visualize and analyze digital signal waveforms generated during simulations of digital circuits. It is often used in conjunction with simulation tools like IVERILOG to provide a graphical representation of how signals change over time in a digital design.
@@ -2313,7 +2316,11 @@ Generated output waveform:
 
 ![Screenshot from 2024-10-21 17-30-42](https://github.com/user-attachments/assets/ff0894e0-b811-4e24-a9c6-7e1da9ad68fb)
 
-### TASK 2: Introduction to Yosys and Logic synthesis:
+</details>
+
+<details>
+<summary>
+ <h4> TASK 2: Introduction to Yosys and Logic synthesis: </summary>
 Synthesis: Synthesis is nothing but conversion of RTL design which is writeen in verilog or any other HDL into the netlist which gives the interconnection of components.The netlist is then supposed to perform the same function as the corresponding HDL code. Synthesizer is the tool which convert RTL design into the netlist form. One of such tool is Yosys.
 
 Yosys: Yosys aims to converting high-level hardware descriptions into optimized gate-level representations that can be targeted for various FPGA and ASIC technologies. The flow for yosys is we feed the yosys with the design which is in RTL level and the .lib file which contain standard library cells then the yosys synthesizes and gives us the netlist file.
@@ -2376,10 +2383,13 @@ write_verilog -noattr good_mux_netlist.v
 
 </details>
 
+</details>
+
 <details>
 <summary> <h2> DAY 2: Timing libs, hierarchical vs flat synthesis and efficient flop coding styles </summary>
 
-### TASK 1: Introduction to dot lib:
+<details>
+<summary> <h4>TASK 1: Introduction to dot lib: </summary>
 '.lib' is like a collection of standard cells. It contains slow cells, fast cells and many more things. In order to view the '.lib' files, Enter the following command :
 
 ```
@@ -2408,7 +2418,10 @@ Different types of AND gates:
 
 ![Screenshot from 2024-10-21 20-19-51](https://github.com/user-attachments/assets/99583e36-12bb-4ee4-891c-797435733758)
 
-### TASK 2: Hierarchical vs Flat Synthesis:
+</details>
+
+<details>
+<summary> <h4> TASK 2: Hierarchical vs Flat Synthesis: </summary>
 #### Hierarchial Synthesis: Hierarchical synthesis in physical design involves breaking down the entire chip design into smaller, manageable modules or blocks. Each module is designed and optimized separately, and then these modules are integrated at a higher level to create the complete chip layout. This approach allows for better control over the design process, reduces complexity, and enables efficient reuse of standardized blocks. All the modules are preserved.
 
 Commands:
@@ -2461,7 +2474,10 @@ write_verilog -noattr multiple_modules_hier.v
 
 ![Screenshot from 2024-10-21 22-22-27](https://github.com/user-attachments/assets/163440fe-2ea4-42bf-81b6-1496856fd60c)
 
-### TASK 3: Various Flop Coding Styles and optimization:
+</details>
+
+<details>
+<summary> <h4> TASK 3: Various Flop Coding Styles and optimization: </summary>
 
 Why do we use flip-flops?
 
@@ -2679,12 +2695,13 @@ show
 ![Screenshot from 2024-10-22 00-18-08](https://github.com/user-attachments/assets/0e38001a-90f2-4f13-9ebd-b958d8742746)
 
 </details>
-
+</details>
 
 <details>
 <summary> <h2> DAY 3: Combinational and sequential optmizations </summary>
 
-### TASK 1: Optimization of various Combinational Designs:
+<details>
+<summary> <h4> TASK 1: Optimization of various Combinational Designs: </summary>
 
 Optimization of various Combinational Designs
 
@@ -2902,8 +2919,10 @@ show
 
 ![Screenshot from 2024-10-22 01-14-17](https://github.com/user-attachments/assets/13c6f0c4-f5c8-4c9d-938a-dcae6215fedd)
 
+</details>
 
-### TASK 2: Optimization of various Sequential Designs:
+<details>
+<summary> <h4> TASK 2: Optimization of various Sequential Designs: </summary>
 
 Optimization of various Sequential Designs
 
@@ -3284,11 +3303,13 @@ show
 ![image](https://github.com/user-attachments/assets/85f1afaf-303e-4e5c-b87a-d7eb02db2ded)
 
 </details>
+</details>
 
 <details>
 <summary> <h2> DAY 4: GLS, blocking vs non-blocking and Synthesis-Simulation mismatch </summary>
 
-### TASK 1: Gate Level Synthesis, Synthesis-Simulation mismatch and Blocking/Non-Blocking statements
+<details>
+<summary> <h4> TASK 1: Gate Level Synthesis, Synthesis-Simulation mismatch and Blocking/Non-Blocking statements </summary>
 
 #### Gate-Level Synthesis
 
@@ -3320,7 +3341,10 @@ To avoid the synthesis and simulation mismatch. It is very important to check th
 
 Blocking statements execute the statemetns in the order they are written inside the always block. Non-Blocking statements execute all the RHS and once always block is entered, the values are assigned to LHS. This will give mismatch as sometimes, improper use of blocking statements can create latches.
 
-## TASK 2: Labs on GLS and Synthesis-Simulation Mismatch
+</details>
+
+<details>
+<summary> <h4> TASK 2: Labs on GLS and Synthesis-Simulation Mismatch </summary>
 
 #### EXAMPLE 1:  2 x 1 MUX using ternary operator
 
@@ -3426,8 +3450,11 @@ gtkwave tb_bad_mux.vcd
 ![image](https://github.com/user-attachments/assets/a9dd247a-1cc8-4fe7-ad3c-34cb2ae6ebb8)
 
 These waveforms correspond to the GATE LEVEL SYNTHESIS for the Bad MUX.
+</details>
 
-## TASK 3: Labs on synth-sim mismatch for blocking statement
+<details>
+<summary> <h4> TASK 3: Labs on synth-sim mismatch for blocking statement </summary>
+
 
 #### EXAMPLE:  Blocking Caveat
 
@@ -3489,4 +3516,5 @@ gtkwave tb_blocking_caveat.vcd
 
 In the second wave window, the netlist simulation demonstrates the correct functioning of the DUT (Design Under Test). In contrast, the first image shows improper behavior of the DUT due to the use of a blocking statement, leading to a synthesis-simulation mismatch. This issue is resolved by performing Gate-Level Simulation (GLS), which verifies the correct behavior in the netlist simulation.
 
+</details>
 </details>
