@@ -2396,7 +2396,7 @@ write_verilog -noattr good_mux_netlist.v
 
 ```
 sudo -i
-cd /home/chandra-shekhar-jha/VLSI/sky130RTLDesignAndSynthesisWorkshop/lib
+cd /home/shruti-chaturvedi/VLSI/sky130RTLDesignAndSynthesisWorkshop/lib
 gvim sky130_fd_sc_hd__tt_025C_1v80.lib
 ```
 
@@ -2696,6 +2696,46 @@ show
 ```
 
 ![Screenshot from 2024-10-22 00-18-08](https://github.com/user-attachments/assets/0e38001a-90f2-4f13-9ebd-b958d8742746)
+
+### Generating Netlists for Special Case Circuits:
+#### 1. Multiplication by a Factor of 2:
+
+In this circuit, hardware multipliers are not required. Instead, the multiplication by 2 is achieved by shifting the number left by appending a zero bit to the Least Significant Bit (LSB). This effectively doubles the value without the need for dedicated hardware. The following commands generate the netlist for this operation:
+
+```
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog mult_2.v
+synth -top mul2
+show
+write_verilog -noattr mul2_netlist.v
+!gvim mul2_netlist.v
+```
+
+Since no hardware is involved, the abc command is skipped with the -liberty flag as there's nothing to map.
+
+![Screenshot 2024-10-22 151843](https://github.com/user-attachments/assets/c9b02528-38ec-4252-9a43-ac9fd2266c47)
+![image](https://github.com/user-attachments/assets/02c7ba95-6307-45ac-bfc9-29edcbebca21)
+![Screenshot 2024-10-22 151801](https://github.com/user-attachments/assets/eb865269-38f4-42b1-bb5b-1ca7a88a8c59)
+
+#### 2. Multiplication by a Factor of 9:
+
+Similar to the previous case, multiplication by 9 is implemented without using dedicated hardware cells or memories. The logic is optimized through the synthesis tool.
+Commands used for netlist generation:
+```
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog mult_8.v
+synth -top mult8
+show
+write_verilog -noattr mult8_netlist.v
+!gvim mult8_netlist.v
+```
+
+![Screenshot 2024-10-22 152032](https://github.com/user-attachments/assets/1134af7f-16b2-4653-b2c3-46aa6abb0e17)
+![image](https://github.com/user-attachments/assets/a16935d3-df73-472d-b0d2-c66b1dfd5892)
+![Screenshot 2024-10-22 152107](https://github.com/user-attachments/assets/2d2510f0-69f5-4bad-944e-be21f237ac55)
+
 
 </details>
 </details>
