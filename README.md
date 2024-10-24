@@ -3564,3 +3564,73 @@ In the second wave window, the netlist simulation demonstrates the correct funct
 </details>
 
 </details>
+
+</details>
+
+***
+
+
+<details>
+  <summary>LAB 11: Synthesize RISC-V and compare output with functional simulations. </summary>
+
+# **LAB SESSION 11:**
+
+### Steps:
+
+1. Copy the src folder from your VSDBabySoC folder to your VLSI folder.
+2. Go the required Directory:
+
+```
+cd /home/shruti-chaturvedi/VLSI/sky130RTLDesignAndSynthesisWorkshop/src/module
+```
+
+### Synthesis:
+
+Using yosys:
+
+```
+yosys
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog clk_gate.v
+read_verilog rvmyth.v
+synth -top rvmyth
+```
+
+![Screenshot from 2024-10-24 01-34-04](https://github.com/user-attachments/assets/97e98018-455c-487c-8fd9-5b3723db428f)
+
+Generating and viewing netlist:
+
+```
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+show
+write_verilog -noattr rvmyth.v
+!gvim rvmyth.v
+exit
+```
+
+![image](https://github.com/user-attachments/assets/daa57229-8fa7-40dc-9787-52dfd5c5fb29)
+
+![Screenshot from 2024-10-24 01-42-03](https://github.com/user-attachments/assets/5dd7c57b-2b36-4454-8221-bcbdcb8c14b3)
+
+![Screenshot from 2024-10-24 01-42-32](https://github.com/user-attachments/assets/9bdc6e97-695a-4469-80bc-85b9501d05bd)
+
+Simulated output:
+
+![Screenshot from 2024-10-24 06-36-45](https://github.com/user-attachments/assets/8bdf170d-fe29-4907-9184-934f170530f7)
+
+### Functional Simulations ( Previously done ):
+
+```
+cd ~
+cd VSDBabySoC
+iverilog -o ./pre_synth_sim.out -DPRE_SYNTH_SIM src/module/testbench.v -I src/include -I src/module/
+./pre_synth_sim.out
+gtkwave pre_synth_sim.vcd
+```
+
+![Screenshot from 2024-10-24 06-42-43](https://github.com/user-attachments/assets/6bd42d49-7131-4cb3-9f2a-17fb01f22df7)
+
+## CONCLUSION: The synthesized output waveform matches the functional simulation output waveform.
+
+
+</details>
