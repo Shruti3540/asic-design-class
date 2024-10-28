@@ -3634,3 +3634,61 @@ gtkwave pre_synth_sim.vcd
 
 
 </details>
+
+***
+
+
+<details>
+  <summary>LAB 12: Static Timing Analysis for Synthesized Risc-V Core using OpenSTA. </summary>
+
+# **LAB SESSION 12:**
+
+### Why STA?
+The purpose of Static Timing Analysis (STA) is to confirm that a design functions reliably at its target clock speed by ensuring signal timing meets specific requirements within each clock cycle, preventing any timing violations.
+
+OpenSTA is an open-source tool for performing STA, used to assess and validate the timing characteristics of digital circuits. It plays a crucial role in digital design workflows by verifying that the circuit satisfies timing constraints, which is fundamental for the proper operation of synchronous digital systems.
+
+### What is reg2reg Path ?
+A reg2reg path (register-to-register path) refers to a timing path in a digital circuit that connects two sequential elements, specifically flip-flops or registers. This path is crucial in the context of Static Timing Analysis (STA) because it represents the flow of data from one register to another through combinational logic.
+
+Reg2reg paths are essential for ensuring proper data flow and synchronization in digital circuits, especially in designs with pipelining or sequential operations. Analyzing these paths helps in verifying that the data processing occurs correctly across clock cycles, thereby ensuring the overall functionality and reliability of the circuit.
+
+### STA using Custom Clock Time Period of 10.4ns:
+Here, in this activity we will be generating setup and hold timing reports for our Synthesized RISC-V Core module.
+Use following commands:
+
+```
+read_liberty /home/shruti-chaturvedi/OpenSTA/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog /home/shruti-chaturvedi/OpenSTA/shruti_rvmyth_netlist.v
+link_design rvmyth
+
+create_clock -name clk -period 10.4 [get_ports clk]
+set_clock_uncertainty [expr 0.05 * 10.4] -setup [get_clocks clk]
+set_clock_uncertainty [expr 0.08 * 10.4] -hold [get_clocks clk]
+set_clock_transition [expr 0.05 * 10.4] [get_clocks clk]
+set_input_transition [expr 0.08 * 10.4] [all_inputs]
+```
+- The clock period has been specified as 10.4 ns.
+- The setup uncertainity is 5% of the defined clock period
+- The clock transition is defined as 5% of the defined clock period
+- The hold uncertainity is set as 8% of the clock period
+- The input data transition is set as 8% of the defined clock period
+
+![Screenshot from 2024-10-28 23-13-42](https://github.com/user-attachments/assets/75139715-d385-4560-aaba-1a6ad7113903)
+
+```
+report_checks -path_delay max
+```
+
+In the below screenshot, we can observe the timing report for a reg2reg max path
+
+![Screenshot from 2024-10-28 23-14-23](https://github.com/user-attachments/assets/1661855b-ef95-4a62-848c-36640fcfa892)
+
+```
+report_checks -path_delay min
+```
+
+In the below screenshot, we can observe the timing report for a reg2reg min path
+
+![Screenshot from 2024-10-28 23-15-40](https://github.com/user-attachments/assets/86a0d637-6cf3-4c9c-b3d4-f0dbba9dc7dc)
+
