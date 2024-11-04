@@ -1,4 +1,4 @@
-<details>
+ <details>
   <summary>LAB 1: Writing a C program and comparing the outputs compiled with both GCC and the RISC-V compiler. </summary>
 
 # **LAB SESSION 1:**
@@ -3694,8 +3694,12 @@ In the below screenshot, we can observe the timing report for a reg2reg min path
 
 </details>
 
+***
 
 <details>
   <summary>LAB 13: PVT Corner Analysis for synthesized VSDBabySoC using OpenSTA </summary>
+
+
+# **LAB SESSION 13:**
 
 
