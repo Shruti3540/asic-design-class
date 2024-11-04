@@ -3702,4 +3702,96 @@ In the below screenshot, we can observe the timing report for a reg2reg min path
 
 # **LAB SESSION 13:**
 
+The PVT corner refers to the combination of Process, Voltage, and Temperature variations that a semiconductor chip might encounter during its operation. These variations can affect the performance, power consumption, and reliability of the chip, so they are simulated to ensure the chip functions correctly under different conditions The below tcl script sta_pvt.tcl can be run to performt the STA across the PVT corners for which the sky130 lib files are available:
+
+The below tcl script sta_pvt.tcl can be run to performt the STA across the PVT corners for which the sky130 lib files are available:
+```
+set list_of_lib_files(1) "sky130_fd_sc_hd__ff_100C_1v65.lib"
+set list_of_lib_files(2) "sky130_fd_sc_hd__ff_100C_1v95.lib"
+set list_of_lib_files(3) "sky130_fd_sc_hd__ff_n40C_1v56.lib"
+set list_of_lib_files(4) "sky130_fd_sc_hd__ff_n40C_1v65.lib"
+set list_of_lib_files(5) "sky130_fd_sc_hd__ff_n40C_1v76.lib"
+set list_of_lib_files(6) "sky130_fd_sc_hd__ff_n40C_1v95.lib"
+set list_of_lib_files(7) "sky130_fd_sc_hd__ss_100C_1v40.lib"
+set list_of_lib_files(8) "sky130_fd_sc_hd__ss_100C_1v60.lib"
+set list_of_lib_files(9) "sky130_fd_sc_hd__ss_n40C_1v28.lib"
+set list_of_lib_files(10) "sky130_fd_sc_hd__ss_n40C_1v35.lib"
+set list_of_lib_files(11) "sky130_fd_sc_hd__ss_n40C_1v40.lib"
+set list_of_lib_files(12) "sky130_fd_sc_hd__ss_n40C_1v44.lib"
+set list_of_lib_files(13) "sky130_fd_sc_hd__ss_n40C_1v60.lib"
+set list_of_lib_files(14) "sky130_fd_sc_hd__ss_n40C_1v76.lib"
+set list_of_lib_files(15) "sky130_fd_sc_hd__tt_025C_1v80.lib"
+set list_of_lib_files(16) "sky130_fd_sc_hd__tt_100C_1v80.lib"
+
+
+for {set i 1} {$i <= [array size list_of_lib_files]} {incr i} {
+read_liberty /home/shruti-chaturvedi/VSDBabySoC/src/lib/$list_of_lib_files($i)
+read_verilog /home/shruti-chaturvedi/VSDBabySoC/src/module/shruti_rvmyth_netlist.v
+link_design rvmyth
+read_sdc /home/shruti-chaturvedi/VSDBabySoC/src/sdc/vsdbabysoc_synthesis.sdc
+check_setup -verbose
+report_checks -path_delay min_max -fields {nets cap slew input_pins fanout} -digits {4} > /home/shruti-chaturvedi/VSDBabySoC/src/sta_output/min_max_$list_of_lib_files($i).txt
+
+exec echo "$list_of_lib_files($i)" >> /home/shruti-chaturvedi/VSDBabySoC/src/sta_output/sta_worst_max_slack.txt
+report_worst_slack -max -digits {4} >> /home/shruti-chaturvedi/VSDBabySoC/src/sta_output/sta_worst_max_slack.txt
+
+exec echo "$list_of_lib_files($i)" >> /home/shruti-chaturvedi/VSDBabySoC/src/sta_output/sta_worst_min_slack.txt
+report_worst_slack -min -digits {4} >> /home/shruti-chaturvedi/VSDBabySoC/src/sta_output/sta_worst_min_slack.txt
+
+exec echo "$list_of_lib_files($i)" >> /home/shruti-chaturvedi/VSDBabySoC/src/sta_output/sta_tns.txt
+report_tns -digits {4} >> /home/shruti-chaturvedi/VSDBabySoC/src/sta_output/sta_tns.txt
+
+exec echo "$list_of_lib_files($i)" >> /home/shruti-chaturvedi/VSDBabySoC/src/sta_output/sta_wns.txt
+report_wns -digits {4} >> /home/shruti-chaturvedi/VSDBabySoC/src/sta_output/sta_wns.txt
+
+}
+```
+
+The SDC file used for generating clock and data constraints is given below:
+
+```
+set PERIOD 10.4
+
+set_units -time ns
+create_clock [get_ports clk] -name clk -period $PERIOD
+set_clock_uncertainty -setup  [expr $PERIOD * 0.05] [get_clocks clk]
+set_clock_transition [expr $PERIOD * 0.05] [get_clocks clk]
+set_clock_uncertainty -hold [expr $PERIOD * 0.08] [get_clocks clk]
+set_input_transition [expr $PERIOD * 0.08] [get_ports ENb_CP]
+set_input_transition [expr $PERIOD * 0.08] [get_ports ENb_VCO]
+set_input_transition [expr $PERIOD * 0.08] [get_ports REF]
+set_input_transition [expr $PERIOD * 0.08] [get_ports VCO_IN]
+set_input_transition [expr $PERIOD * 0.08] [get_ports VREFH]
+```
+
+sta_pvt.tcl file:
+
+![image](https://github.com/user-attachments/assets/4ba1acc4-cb54-4def-87e4-785933b56d5c)
+
+
+A table comprising of the slacks report is shown below: 
+![image](https://github.com/user-attachments/assets/5657637a-9d55-45e4-aac8-cea80a0cb7d5)
+
+Total Negative Slack:
+
+![image](https://github.com/user-attachments/assets/7af2c948-b346-4cd1-a055-ec4fb7fda348)
+
+Worst Negative Slack:
+
+![image](https://github.com/user-attachments/assets/d231bdc3-79e9-4ec5-a429-a00d0e9a7b75)
+
+Worst Setup Slack:
+
+![image](https://github.com/user-attachments/assets/d0c6548d-abc2-43dc-a34e-fd25157fd477)
+
+Worst Hold Slack:
+
+![image](https://github.com/user-attachments/assets/c11a8e21-17de-43ad-8cdd-46b42f2cd143)
+
+Colnclusion:
+
+From the above analysis we can conclude that
+- sky130_fd_sc_hd__ss_n40C_1v28.lib Library file has the worst setup slack
+- sky130_fd_sc_hd__ff_100C_1v95.lib Library file has the worst hold slack
+
 
