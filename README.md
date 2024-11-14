@@ -4111,5 +4111,69 @@ There are four timing parameters used to characterize the inverter standard cell
 
 ![image](https://github.com/user-attachments/assets/b26fc44a-e62f-4799-ba1a-1efee8a8ff96)
 
+Rise Transition : 2.24638 - 2.18242 =  0.06396 ns = 63.96 ps
+Fall Transition : 4.0955 - 4.05536 =  0.0419 ns = 41.9 ps
+Cell Rise Delay : 2.21144 - 2.15008 = 0.06136 ns = 61.36 ps
+Cell Fall Delay : 4.07807 - 4.05 =0.02 ns = 20 ps
+
+### Design Rule Check (DRC)
+DRC verifies whether a design meets the predefined process technology rules given by the foundry for its manufacturing. DRC checking is an essential part of the physical design flow and ensures the design meets manufacturing requirements and will not result in a chip failure. It defines the Quality of chip. They are so many DRCs, let us see few of them
+
+### Design rules for physical wires
+Minimum width of the wire, Minimum spacing between the wires, Minimum pitch of the wire To solve signal short violation, we take the metal layer and put it on to upper metal layer. we check via rules, Via width, via spacing.
+
+```
+cd
+wget http://opencircuitdesign.com/open_pdks/archive/drc_tests.tgz
+tar xfz drc_tests.tgz
+cd drc_tests
+ls -al
+gvim .magicrc
+magic -d XR &
+```
+
+![image](https://github.com/user-attachments/assets/0f7514e0-cd07-42fe-ba8c-750b7e9fd18c)
+
+First load the poly file by load poly.mag on tkcon window
+
+![image](https://github.com/user-attachments/assets/f53b9b72-fa0b-4473-961a-49df020557f1)
+
+In line
+
+spacing npres *nsd 480 touching_illegal \
+	"poly.resistor spacing to N-tap < %d (poly.9)"
+
+change to
+
+spacing npres allpolynonres 480 touching_illegal \
+	"poly.resistor spacing to N-tap < %d (poly.9)"
+Also,
+
+spacing xhrpoly,uhrpoly,xpc alldiff 480 touching_illegal \
+	"xhrpoly/uhrpoly resistor spacing to diffusion < %d (poly.9)"
+
+change to
+
+spacing xhrpoly,uhrpoly,xpc allpolynonres 480 touching_illegal \
+	"xhrpoly/uhrpoly resistor spacing to diffusion < %d (poly.9)"
+
+![image](https://github.com/user-attachments/assets/9f6b7400-51aa-426d-a9de-1ce4aaf8e43e)
+
+![image](https://github.com/user-attachments/assets/aa35ec6a-4e94-48bc-9420-a3c8be72b4f9)
+
+Run the commands in tkcon window:
+
+```
+tech load sky130A.tech
+drc check
+drc why
+```
+
+![image](https://github.com/user-attachments/assets/e4040862-e4b6-4719-93d6-85c1fa120bdd)
+
+
+
+
+
 
 
