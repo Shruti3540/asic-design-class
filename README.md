@@ -4353,6 +4353,7 @@ magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs
 
 Custom inverter inserted in placement def:
 
+![image](https://github.com/user-attachments/assets/be449a69-3630-4b45-bd86-70da85dfaa5f)
 
 
 ### Post-Synthesis timing analysis with OpenSTA tool
