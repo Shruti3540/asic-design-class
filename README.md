@@ -3807,6 +3807,7 @@ From the above analysis we can conclude that
 <summary> <h2> DAY 1: Inception of open-source EDA, OpenLane and Sky130 PDK </summary>
 
 -> Package
+
 The part of any embedded board that we usually call the chip is actually the chip's package. The actual produced chip, which is usually found in the middle of the package, is essentially protected by this package. The wire bonding method creates connections between the package and the chip by joining tiny wires to provide a simple connected interface that facilitates signal flow.
 
 -> Chip
@@ -3814,6 +3815,7 @@ The part of any embedded board that we usually call the chip is actually the chi
 Pads allow all signals from the outside world to enter and exit the chip. All of the chip's digital logic is located in the area bounded by these pads, which is known as the core. The die, the basic manufacturing unit for semiconductor chips, is made up of the core and pads.
 
 -> Foundry
+
 Foundry IPs are intellectual properties specific to a given foundry, which is the location where semiconductor chips are made. These IPs require particular knowledge to develop. On the other hand, these designs' reusable digital logic components are known as macros.
 
 
@@ -3822,22 +3824,28 @@ Foundry IPs are intellectual properties specific to a given foundry, which is th
 A precise sequence needs to be followed in order to run a C program on a particular hardware layout, such the chip inside a laptop. First, the RISC-V ISA (Reduced Instruction Set Computing - V Instruction Set Architecture) is used to compile the C program into assembly code. The computer's hardware can then process this machine language, which is represented by binary (0s and 1s), after it has been converted from assembly code. After that, RTL (Register Transfer Level) is used to implement the RISC-V requirements usinga hardware description language. Finally, the design moves from RTL to layout in a standard PnR (Place and Route) or RTL to GDSII flow.
 
 -> RTL IPs (Register Transfer Level Intellectual Property)
+
 RTL IPs are digital hardware blocks or components that have been pre-designed and tested and are represented at the Register Transfer Level (RTL). Data flow between registers and the actions carried out on this data are described by RTL, a level of abstraction found in hardware description languages (HDLs). RTL IPs are specifically created at this level to make design integration easier. In IC design, an IP block is a reusable element that can be incorporated into bigger designs. Designers can concentrate on higher-level elements instead of handling low-level implementation issues by using these intellectual properties, which can be developed internally or licensed from vendors. RTL IPs are well-optimized and pre-tested, reducing possible risks and increasing productivity, time-to-market, and design reliability.
 
 -> EDA (Electronic Design Automation)
+
 EDA tools are software applications used to design, develop, and analyze electronic systems, such as integrated circuits (ICs) and printed circuit boards (PCBs). These tools automate many design tasks, increasing efficiency and speeding up time-to-market.
 
 -> Process Design Kit (PDK)
+
 A Process Design Kit (PDK) is a collection of files used to model a semiconductor fabrication process within design tools for IC development. PDKs are typically proprietary and specific to a particular foundry, often protected by non-disclosure agreements. Recently, however, open-source PDKs have been introduced to encourage innovation and collaboration in the design community. Open-source PDKs, such as SKY130, GFU180, and ASAP7, allow designers to access, customize, and modify the kit to suit specific design requirements. This flexibility promotes knowledge sharing, reduces barriers for new designers, and encourages collaborative development in IC and electronic system design.
 
 #### RTL to GDSII flow
 -> RTL Design (Register Transfer Level)
+
 Using Hardware Description Languages (HDLs) like Verilog or VHDL, the designer describes the logical operations and functionality of each module. RTL code represents the behavior of the circuit at the register level, laying the groundwork for synthesis.
 
 -> Synthesis
+
 Convert the RTL code into a gate-level netlist using a synthesis tool. This process maps the RTL description onto standard cells provided by the foundry, creating a network of logic gates that can be implemented on silicon. Constraints such as timing, power, and area are applied here.
 
 -> Design for Testability (DFT)
+
 Incorporate test structures, such as scan chains and built-in self-test (BIST) circuits, to make post-manufacturing testing possible. DFT enhances the ability to detect defects in the silicon after production.
 
 ![image](https://github.com/user-attachments/assets/5ce0eab6-029d-45c2-aecc-dd6ae547e325)
@@ -3848,18 +3856,23 @@ Incorporate test structures, such as scan chains and built-in self-test (BIST) c
 
 
 -> Floorplanning and Powerplanning
+
 It is a crucial step in the digital design flow that involves partitioning the chip's area and determining the placement of major components and functional blocks. It establishes an initial high-level layout and defines the overall chip dimensions, locations of critical modules, power grid distribution, and I/O placement.The primary goals of floor planning are: Area Partitioning, Power Distribution, Signal Flow and Interconnect Planning, Placement of Key Components, Design Constraints and Optimization.
 
 -> Placement
+
 Placement involves assigning the physical coordinates to each gate-level cell on the chip's layout. The placement process aims to minimize wirelength, optimize signal delay, and satisfy design rules and constraints. Modern placement algorithms use techniques like global placement and detailed placement to achieve an optimal placement solution.
 
 -> Clock Tree Synthesis (CTS)
+
 Design the clock distribution network to deliver the clock signal with minimal skew and delay across the chip. CTS ensures synchronous operation of the logic by maintaining uniform timing throughout the design.
 
 -> Routing
+
 Connect all the placed cells and blocks with metal wires according to the netlist. Routing is done in multiple layers and needs to meet timing and power constraints. Ensuring that the connections do not cause crosstalk or violate design rules is crucial at this stage.
 
 -> Signoff and Physical Verification
+
 Verify the physical layout against the design rules provided by the foundry (DRC - Design Rule Check) and ensure the layout matches the intended logic design (LVS - Layout vs. Schematic). Additional checks include timing analysis (STA - Static Timing Analysis), power analysis, and IR drop analysis.
 
 Synthesis in openlane:
@@ -3999,9 +4012,10 @@ run_placement
 ![6](https://github.com/user-attachments/assets/ab3311d5-5eac-458c-924a-1d43d3183eed)
 
 To view the placement in magic:
-
+```
 cd Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/17-03_12-06/results/placement/
 magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.placement.def &
+```
 
 ![7](https://github.com/user-attachments/assets/d47a7f50-3326-414e-b8bb-08e99c8b13b2)
 
@@ -4015,27 +4029,35 @@ magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs
 ### 16-Mask CMOS Fabrication Theory
 
 #### Substrate Selection
+
 This is the most initial phase of the process where the subrstrate is chosen. Here we are chosing a p-substrate.
 
 #### Active Region Creation
+
 To isolate the active regions for transistors, the process starts with the deposition of SiO₂ (silicon dioxide) and Si₃N₄ (silicon nitride) layers. This is followed by photolithography and etching of the silicon nitride layer. This method is known as LOCOS (Local Oxidation of Silicon), where an oxide layer is grown in specific areas to define the active regions. Finally, the Si₃N₄ layer is removed using hot H₂SO₄ (sulfuric acid).
 
 #### N-Well and P-Well Formation
+
 The N-well and P-well regions are formed independently. For P-well formation, boron ions are implanted, while for N-well formation, phosphorus ions are used. A high-temperature furnace process is then applied to drive-in the diffusion of these ions, establishing the well depths in a step commonly referred to as the tub process.
 
 #### Gate Formation
+
 The gate is a crucial terminal in CMOS transistors, as it regulates the threshold voltage for transistor switching. The gates for both NMOS and PMOS transistors are created using photolithography techniques. Key factors in gate formation include the oxide capacitance and the doping concentration, which influence the transistor's performance.
 
 #### Lightly dopped Drain(LDD)
+
 LDD formed to avoid the hot electron effect.
 
 #### Source and Drain Formation
+
 Screen oxide added to avoid channelling during implants followed by Aresenic implantation and high temperature annealing.
 
 #### Local Interconnect Formation
+
 The screen oxide layer is removed using HF etching, followed by the deposition of titanium (Ti) to create low-resistance contacts. Heat treatment is then applied, leading to chemical reactions that form titanium silicide at the contact points for low-resistance interconnects, and titanium nitride at the top-level connections, facilitating local signal routing.
 
 #### Higher Level Metal Formation
+
 Chemical Mechanical Polishing (CMP) is performed by doping silicon oxide with boron or phosphorus to achieve surface planarization. This process is followed by the deposition of titanium nitride (TiN) and tungsten. An aluminum (Al) layer is then deposited, patterned using photolithography, and further polished with CMP. This forms the first interconnect layer. Additional interconnect layers can be stacked on top to achieve higher levels of metal connections. Finally, a dielectric layer, typically Si₃N₄ (silicon nitride), is added on top to protect the chip.
 
 ### Clone custom inverter standard cell design from github repository
@@ -4117,9 +4139,11 @@ Cell Rise Delay : 2.21144 - 2.15008 = 0.06136 ns = 61.36 ps
 Cell Fall Delay : 4.07807 - 4.05 =0.02 ns = 20 ps
 
 ### Design Rule Check (DRC)
+
 DRC verifies whether a design meets the predefined process technology rules given by the foundry for its manufacturing. DRC checking is an essential part of the physical design flow and ensures the design meets manufacturing requirements and will not result in a chip failure. It defines the Quality of chip. They are so many DRCs, let us see few of them
 
 ### Design rules for physical wires
+
 Minimum width of the wire, Minimum spacing between the wires, Minimum pitch of the wire To solve signal short violation, we take the metal layer and put it on to upper metal layer. we check via rules, Via width, via spacing.
 
 ```
@@ -4226,6 +4250,7 @@ New lef file:
 ![image](https://github.com/user-attachments/assets/c8e57aca-b6ec-4210-b845-5f78159d98e7)
 
 Including Custom Cells in ASIC Design
+
 In the first stages of an inverter, we produced a proprietary standard cell. Move the lef files, sky130_fd_sc_hd_typical.lib, sky130_fd_sc_hd_slow.lib, and sky130_fd_sc_hd_fast.lib from the libs folder vsdstdcelldesign to the picorv32a's src folder. Next, make the following changes to config.tcl.
 
 #### Design
@@ -4283,6 +4308,7 @@ ls ~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/src/
 ### Run openlane flow synthesis with newly inserted custom inverter cell.
 
 Commands
+
 ```
 cd Desktop/work/tools/openlane_working_dir/openlane
 docker
@@ -4301,6 +4327,7 @@ run_synthesis
 ![image](https://github.com/user-attachments/assets/beb17a8a-9b4d-444a-8b06-77a56ffb0bc0)
 
 To remove violations of tns and wns:
+
 ```
 prep -design picorv32a -tag <your_folder> -overwrite
 set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
@@ -4322,6 +4349,7 @@ run_floorplan
 ![image](https://github.com/user-attachments/assets/651a726c-ad96-4011-a99d-7f352225d1fa)
 
 During run_floorplan the error is found
+
 Screenshot of error
 
 ![image](https://github.com/user-attachments/assets/5d84e738-9cd2-489a-88fe-ba9a32230494)
@@ -4345,9 +4373,10 @@ run_placement
 
 
 Now, open a new terminal and run the below commands to load placement def in magic
-
+```
 cd Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/14-11_12-29/results/placement/
 magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.placement.def &
+```
 
 ![image](https://github.com/user-attachments/assets/ea84bd71-7d08-47f8-83cc-30d50d0a498f)
 
@@ -4373,6 +4402,7 @@ run_synthesis
 ```
 
 Newly created pre_sta.conf for STA analysis in openlane directory
+
 ```
 set_cmd_units -time ns -capacitance pF -current mA -voltage V -resistance kOhm -distance um
 read_liberty -max /home/vsduser/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/src/sky130_fd_sc_hd__slow.lib
@@ -4435,6 +4465,7 @@ sta pre_sta.conf
 We now try to optimise synthesis.
 
 Go to new terminal and run the following commands:
+
 ```
 cd Desktop/work/tools/openlane_working_dir/openlane
 docker
@@ -4452,6 +4483,7 @@ run_synthesis
 
 
 Commands to run STA:
+
 ```
 cd Desktop/work/tools/openlane_working_dir/openlane
 sta pre_sta.conf
@@ -4462,6 +4494,7 @@ sta pre_sta.conf
 ![image](https://github.com/user-attachments/assets/bbad7af2-8597-4a6a-bfcb-df024ad8a912)
 
 Run the following commands to optimise timing:
+
 ```
 report_net -connections _13111_
 replace_cell _16171_ sky130_fd_sc_hd__nor3_2
@@ -4474,6 +4507,7 @@ report_checks -fields {net cap slew input_pins} -digits 4
 We can observe that the tns has reduced to -402.45 from -403.54 and wns has reduced to -5.44 from -5.59
 
 Run the following commands:
+
 ```
 cd Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/25-03_18-52/results/synthesis/
 ls
@@ -4482,6 +4516,7 @@ ls
 ```
 
 Commands to write verilog:
+
 ```
 write_verilog /home/vsduser/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/25-03_18-52/results/synthesis/picorv32a.synthesis.v
 exit
@@ -4491,6 +4526,7 @@ exit
 
 
 Now, run the following commands:
+
 ```
 cd Desktop/work/tools/openlane_working_dir/openlane
 docker
@@ -4521,6 +4557,7 @@ The cts is successful as shown below:
 Commands to be run in OpenLANE flow to do OpenROAD timing analysis with integrated OpenSTA in OpenROAD
 
 Commands
+
 ```
 openroad
 read_lef /openLANE_flow/designs/picorv32a/runs/13-11_21-58/tmp/merged.lef
@@ -4551,10 +4588,12 @@ exit
 Routing establishes a physical connection between pins, and algorithms like Maze Routing (e.g., the Lee algorithm) are used to find efficient paths on a routing grid. The Lee algorithm starts at a source pin, assigning incremental labels to neighboring cells until reaching the target pin, prioritizing L-shaped routes and using zigzag paths if needed. While effective for finding the shortest path between two pins, the Lee algorithm can be slow for large-scale designs, prompting the use of faster alternatives for handling complex routing tasks.
 
 Generation of Power Distribution Network (PDN)
+
 Commands
 ```
 gen_pdn
 ```
+
 ![image](https://github.com/user-attachments/assets/40539513-ac98-42ce-a620-5d4663d04bbc)
 
 ![image](https://github.com/user-attachments/assets/ff714d5a-68a0-419e-a2b1-2e86ea781af1)
@@ -4570,6 +4609,7 @@ magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs
 ![image](https://github.com/user-attachments/assets/7c1d04cc-d307-4da4-9243-f9f231a564d0)
 
 Perfrom detailed routing
+
 Commands
 ```
 echo $::env(CURRENT_DEF)
@@ -4581,6 +4621,7 @@ run_routing
 ![image](https://github.com/user-attachments/assets/4a368fa6-8b6d-40e2-b6f3-59ddc3259cd3)
 
 Commands
+
 ```
 cd Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/14-11_21-41/results/routing/
 magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.def &
@@ -4593,6 +4634,7 @@ magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs
 #### Post-Route parasitic extraction using SPEF extractor
 
 Commands for SPEF extraction:
+
 ```
 cd Desktop/work/tools/openlane_working_dir/openlane/scripts/spef_extractor
 
@@ -4605,6 +4647,7 @@ python3 main.py --lef_file /home/vsduser/Desktop/work/tools/openlane_working_dir
 #### Post-Route OpenSTA timing analysis with the extracted parasitics of the route
 
 Commands:
+
 ```
 openroad
 read_lef /openLANE_flow/designs/picorv32a/runs/14-11_21-41/tmp/merged.lef
