@@ -3794,4 +3794,322 @@ From the above analysis we can conclude that
 - sky130_fd_sc_hd__ss_n40C_1v28.lib Library file has the worst setup slack
 - sky130_fd_sc_hd__ff_100C_1v95.lib Library file has the worst hold slack
 
+</details>
+
+***
+
+
+<details>
+  <summary>LAB 14:  Advanced Physical Design using OpenLane using Sky130 </summary>
+
+  
+  <details>
+<summary> <h2> DAY 1: Inception of open-source EDA, OpenLane and Sky130 PDK </summary>
+
+-> Package
+The part of any embedded board that we usually call the chip is actually the chip's package. The actual produced chip, which is usually found in the middle of the package, is essentially protected by this package. The wire bonding method creates connections between the package and the chip by joining tiny wires to provide a simple connected interface that facilitates signal flow.
+
+-> Chip
+
+Pads allow all signals from the outside world to enter and exit the chip. All of the chip's digital logic is located in the area bounded by these pads, which is known as the core. The die, the basic manufacturing unit for semiconductor chips, is made up of the core and pads.
+
+-> Foundry
+Foundry IPs are intellectual properties specific to a given foundry, which is the location where semiconductor chips are made. These IPs require particular knowledge to develop. On the other hand, these designs' reusable digital logic components are known as macros.
+
+
+-> ISA (Instruction Set Architecture)
+
+A precise sequence needs to be followed in order to run a C program on a particular hardware layout, such the chip inside a laptop. First, the RISC-V ISA (Reduced Instruction Set Computing - V Instruction Set Architecture) is used to compile the C program into assembly code. The computer's hardware can then process this machine language, which is represented by binary (0s and 1s), after it has been converted from assembly code. After that, RTL (Register Transfer Level) is used to implement the RISC-V requirements usinga hardware description language. Finally, the design moves from RTL to layout in a standard PnR (Place and Route) or RTL to GDSII flow.
+
+-> RTL IPs (Register Transfer Level Intellectual Property)
+RTL IPs are digital hardware blocks or components that have been pre-designed and tested and are represented at the Register Transfer Level (RTL). Data flow between registers and the actions carried out on this data are described by RTL, a level of abstraction found in hardware description languages (HDLs). RTL IPs are specifically created at this level to make design integration easier. In IC design, an IP block is a reusable element that can be incorporated into bigger designs. Designers can concentrate on higher-level elements instead of handling low-level implementation issues by using these intellectual properties, which can be developed internally or licensed from vendors. RTL IPs are well-optimized and pre-tested, reducing possible risks and increasing productivity, time-to-market, and design reliability.
+
+-> EDA (Electronic Design Automation)
+EDA tools are software applications used to design, develop, and analyze electronic systems, such as integrated circuits (ICs) and printed circuit boards (PCBs). These tools automate many design tasks, increasing efficiency and speeding up time-to-market.
+
+-> Process Design Kit (PDK)
+A Process Design Kit (PDK) is a collection of files used to model a semiconductor fabrication process within design tools for IC development. PDKs are typically proprietary and specific to a particular foundry, often protected by non-disclosure agreements. Recently, however, open-source PDKs have been introduced to encourage innovation and collaboration in the design community. Open-source PDKs, such as SKY130, GFU180, and ASAP7, allow designers to access, customize, and modify the kit to suit specific design requirements. This flexibility promotes knowledge sharing, reduces barriers for new designers, and encourages collaborative development in IC and electronic system design.
+
+#### RTL to GDSII flow
+-> RTL Design (Register Transfer Level)
+Using Hardware Description Languages (HDLs) like Verilog or VHDL, the designer describes the logical operations and functionality of each module. RTL code represents the behavior of the circuit at the register level, laying the groundwork for synthesis.
+
+-> Synthesis
+Convert the RTL code into a gate-level netlist using a synthesis tool. This process maps the RTL description onto standard cells provided by the foundry, creating a network of logic gates that can be implemented on silicon. Constraints such as timing, power, and area are applied here.
+
+-> Design for Testability (DFT)
+Incorporate test structures, such as scan chains and built-in self-test (BIST) circuits, to make post-manufacturing testing possible. DFT enhances the ability to detect defects in the silicon after production.
+
+![image](https://github.com/user-attachments/assets/5ce0eab6-029d-45c2-aecc-dd6ae547e325)
+
+### ASIC Flow
+
+![image](https://github.com/user-attachments/assets/4d81b9aa-33cc-4e3d-8973-aaf780e621d0)
+
+
+-> Floorplanning and Powerplanning
+It is a crucial step in the digital design flow that involves partitioning the chip's area and determining the placement of major components and functional blocks. It establishes an initial high-level layout and defines the overall chip dimensions, locations of critical modules, power grid distribution, and I/O placement.The primary goals of floor planning are: Area Partitioning, Power Distribution, Signal Flow and Interconnect Planning, Placement of Key Components, Design Constraints and Optimization.
+
+-> Placement
+Placement involves assigning the physical coordinates to each gate-level cell on the chip's layout. The placement process aims to minimize wirelength, optimize signal delay, and satisfy design rules and constraints. Modern placement algorithms use techniques like global placement and detailed placement to achieve an optimal placement solution.
+
+-> Clock Tree Synthesis (CTS)
+Design the clock distribution network to deliver the clock signal with minimal skew and delay across the chip. CTS ensures synchronous operation of the logic by maintaining uniform timing throughout the design.
+
+-> Routing
+Connect all the placed cells and blocks with metal wires according to the netlist. Routing is done in multiple layers and needs to meet timing and power constraints. Ensuring that the connections do not cause crosstalk or violate design rules is crucial at this stage.
+
+-> Signoff and Physical Verification
+Verify the physical layout against the design rules provided by the foundry (DRC - Design Rule Check) and ensure the layout matches the intended logic design (LVS - Layout vs. Schematic). Additional checks include timing analysis (STA - Static Timing Analysis), power analysis, and IR drop analysis.
+
+Synthesis in openlane:
+
+STEP 1: Run 'picorv32a' design synthesis using OpenLANE flow and generate necessary outputs. Commands to invoke the OpenLANE flow and perform synthesis.
+
+```
+cd Desktop/work/tools/openlane_working_dir/openlane
+docker
+./flow.tcl -interactive
+package require openlane 0.9
+prep -design picorv32a
+run_synthesis
+```
+
+![Day 1- 1](https://github.com/user-attachments/assets/350eec50-a92f-4efe-8dbf-56844fd67819)
+
+To view the netlist:
+
+```
+cd designs/picorv32a/runs/13-11_20-18/results/synthesis/
+gedit picorv32a.synthesis.v
+```
+
+![1](https://github.com/user-attachments/assets/0facf3c8-08ac-44fe-b495-d4ea62eefd50)
+
+Netlist code:
+
+![2](https://github.com/user-attachments/assets/0fd49e8d-b4ff-419a-bf8c-fbab78bbef05)
+
+To view the yosys report:
+
+```
+cd ..
+cd reports/synthesis
+gedit 1-yosys_4.stat.rpt
+```
+
+![3](https://github.com/user-attachments/assets/97c264ae-eb8f-40c0-990b-50bec96f3dd1)
+
+![4](https://github.com/user-attachments/assets/61e2d90c-e9fc-4d2b-ab2d-fdd796a35c80)
+
+![5](https://github.com/user-attachments/assets/ffd27ee4-ad08-4dee-921f-b4127d0a7fee)
+
+Flop ratio = Number of D Flip flops = 1613  = 0.1084
+             ______________________   _____
+             Total Number of cells    14876
+
+      
+</details>
+
+<details>
+<summary> <h2> DAY 2: Good Floorplan vs Bad Floorplan and Introduction to Library Cell </summary>
+
+Utilization Factor and Aspect Ratio: In IC floor planning, utilization factor and aspect ratio are key parameters. The utilization factor is the ratio of the area occupied by the netlist to the total core area. While a perfect utilization of 1 (100%) is ideal, practical designs target a factor of 0.5 to 0.6 to allow space for buffer zones, routing channels, and future adjustments. The aspect ratio, defined as height divided by width, indicates the chip’s shape; an aspect ratio of 1 denotes a square, while other values result in a rectangular layout. The aspect ratio is chosen based on functional, packaging, and manufacturing needs.
+
+Utilisation Factor =  Area occupied by netlist
+                     __________________________
+                         Total area of core
+                         
+
+Aspect Ratio =  Height
+               ________
+                Width
+Pre-placed cells : Pre-placed cells are essential functional blocks, such as memory, custom processors, and analog circuits, positioned manually in fixed locations. These blocks are crucial for the chip’s performance and remain fixed during placement and routing to preserve their functionality and layout integrity.
+
+Decoupling Capacitors : Decoupling capacitors are placed near logic circuits to stabilize power supply voltages during transient events. Acting as local energy reserves, they help reduce voltage fluctuations, crosstalk, and electromagnetic interference (EMI), ensuring reliable power delivery to sensitive circuits.
+
+Power Planning: A robust power planning strategy includes creating a power and ground mesh to distribute VDD and VSS evenly across the chip. This setup ensures stable power delivery, minimizes voltage drops, and improves overall efficiency. Multiple power and ground points reduce the risk of instability and voltage drop issues, supporting the design’s power needs effectively.
+
+Pin Placement: Pin placement (I/O planning) is crucial for functionality and reliability. Strategic pin assignment minimizes signal degradation, preserves data integrity, and helps manage heat dissipation. Proper positioning of power and ground pins supports thermal management and enhances signal strength, contributing to overall system stability and manufacturability.
+
+Floorplaning using OpenLANE:
+
+Commands:
+```
+cd Desktop/work/tools/openlane_working_dir/openlane
+docker
+./flow.tcl -interactive
+package require openlane 0.9
+prep -design picorv32a
+run_synthesis
+run_floorplan
+```
+
+![6](https://github.com/user-attachments/assets/af2a5394-52ff-4256-a5d7-814506871b22)
+
+![7](https://github.com/user-attachments/assets/fecb1605-8250-459a-ab09-b6ab08eef73a)
+
+```
+cd Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/14-11_06-24/results/floorplan
+gedit picorv32a.floorplan.def
+```
+
+![8](https://github.com/user-attachments/assets/af29afd3-f512-4007-9a32-171fc326e53a)
+
+According to floorplan definition:
+
+1000 Unit Distance = 1 Micron
+
+Die width in unit distance = 660685−0 = 660685
+
+Die height in unit distance = 671405−0 = 671405
+
+Distance in microns = Value in Unit Distance/1000
+
+​Die width in microns = 660685/1000 = 660.685 Microns
+
+Die height in microns = 671405/1000 = 671.405 Microns
+
+Area of die in microns = 660.685 × 671.405 = 443587.212425 Square Microns
+
+To view the floorplan in magic run the below commands:
+
+cd Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/14-11_06-24/results/floorplan/
+magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.floorplan.def &
+
+![1](https://github.com/user-attachments/assets/d5eb738d-eacd-43a9-8106-22fe016addc4)
+
+Equidistant placement of ports
+
+![2](https://github.com/user-attachments/assets/0f3488bd-25b5-4b97-b4c7-647f87a893e5)
+
+IO port layers
+
+![3](https://github.com/user-attachments/assets/7778176a-74e6-4b90-a09b-47fd418c8ba2)
+
+Unplaced standard cells
+
+![5](https://github.com/user-attachments/assets/039bfb05-f192-48c9-90b6-fafe65bde2de)
+
+Command to run placement:
+```
+run_placement
+```
+
+![6](https://github.com/user-attachments/assets/ab3311d5-5eac-458c-924a-1d43d3183eed)
+
+To view the placement in magic:
+
+cd Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/17-03_12-06/results/placement/
+magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.placement.def &
+
+![7](https://github.com/user-attachments/assets/d47a7f50-3326-414e-b8bb-08e99c8b13b2)
+
+![8](https://github.com/user-attachments/assets/8441f493-ce2b-4784-bd96-2f7f5681cc2a)
+
+</details>
+
+<details>
+<summary> <h2> DAY 3: Design Library Cell Using Magic Layout and Cell characterization </summary>
+
+### 16-Mask CMOS Fabrication Theory
+
+#### Substrate Selection
+This is the most initial phase of the process where the subrstrate is chosen. Here we are chosing a p-substrate.
+
+#### Active Region Creation
+To isolate the active regions for transistors, the process starts with the deposition of SiO₂ (silicon dioxide) and Si₃N₄ (silicon nitride) layers. This is followed by photolithography and etching of the silicon nitride layer. This method is known as LOCOS (Local Oxidation of Silicon), where an oxide layer is grown in specific areas to define the active regions. Finally, the Si₃N₄ layer is removed using hot H₂SO₄ (sulfuric acid).
+
+#### N-Well and P-Well Formation
+The N-well and P-well regions are formed independently. For P-well formation, boron ions are implanted, while for N-well formation, phosphorus ions are used. A high-temperature furnace process is then applied to drive-in the diffusion of these ions, establishing the well depths in a step commonly referred to as the tub process.
+
+#### Gate Formation
+The gate is a crucial terminal in CMOS transistors, as it regulates the threshold voltage for transistor switching. The gates for both NMOS and PMOS transistors are created using photolithography techniques. Key factors in gate formation include the oxide capacitance and the doping concentration, which influence the transistor's performance.
+
+#### Lightly dopped Drain(LDD)
+LDD formed to avoid the hot electron effect.
+
+#### Source and Drain Formation
+Screen oxide added to avoid channelling during implants followed by Aresenic implantation and high temperature annealing.
+
+#### Local Interconnect Formation
+The screen oxide layer is removed using HF etching, followed by the deposition of titanium (Ti) to create low-resistance contacts. Heat treatment is then applied, leading to chemical reactions that form titanium silicide at the contact points for low-resistance interconnects, and titanium nitride at the top-level connections, facilitating local signal routing.
+
+#### Higher Level Metal Formation
+Chemical Mechanical Polishing (CMP) is performed by doping silicon oxide with boron or phosphorus to achieve surface planarization. This process is followed by the deposition of titanium nitride (TiN) and tungsten. An aluminum (Al) layer is then deposited, patterned using photolithography, and further polished with CMP. This forms the first interconnect layer. Additional interconnect layers can be stacked on top to achieve higher levels of metal connections. Finally, a dielectric layer, typically Si₃N₄ (silicon nitride), is added on top to protect the chip.
+
+### Clone custom inverter standard cell design from github repository
+
+```
+cd Desktop/work/tools/openlane_working_dir/openlane
+git clone https://github.com/nickson-jose/vsdstdcelldesign
+cd vsdstdcelldesign
+cp /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech .
+ls
+magic -T sky130A.tech sky130_shru_inv.mag &
+```
+
+Custom inverter layout in magic:
+
+![image](https://github.com/user-attachments/assets/b4e455ac-f87d-4553-8c09-46afec223604)
+
+n-well:
+
+![image](https://github.com/user-attachments/assets/e6c54659-f64b-481f-9e52-30af5c42b714)
+
+VDD i.e VPWR:
+
+![image](https://github.com/user-attachments/assets/720598e9-29e9-44bb-9088-be902d4ce06b)
+
+Poly:
+
+![image](https://github.com/user-attachments/assets/42eed4b2-981b-4d5f-ac92-311c52ea08eb)
+
+Commands for spice extraction of the custom inverter layout:
+
+```
+extract all
+ext2spice cthresh 0 rthresh 0
+ext2spice
+```
+
+![image](https://github.com/user-attachments/assets/0672da32-aebc-4fd8-9c01-17737ab370b5)
+
+.spice:
+
+![image](https://github.com/user-attachments/assets/7d3829da-edff-4715-96a3-554cb3f48211)
+
+Grid Values:
+
+![image](https://github.com/user-attachments/assets/c1fcfd2f-077e-4c19-9a0c-fa876c344ca7)
+
+![image](https://github.com/user-attachments/assets/dc542ed8-ddd1-4dd9-8bd4-ee7187c053f1)
+
+Commands for ngspice simulation:
+
+```
+ngspice sky130_shru_inv.spice
+plot y vs time a
+```
+
+![image](https://github.com/user-attachments/assets/7106af98-5063-4de8-86eb-3f3e55c198a3)
+
+PLOT:
+
+![image](https://github.com/user-attachments/assets/60f9781a-604a-42a2-bcce-8bfd97768604)
+
+There are four timing parameters used to characterize the inverter standard cell:
+
+1. Rise transition - Time taken for the output to rise from 20% to 80% of max value
+2. Fall Transition: Time taken for the output to fall from 80% to 20% of max value
+3. Cell Rise delay: difference in time(50% output rise) to time(50% input fall)
+4. Cell Fall delay: difference in time(50% output fall) to time(50% input rise)
+   
+-> Rising Transition
+
+-> 20% rising output
+
+![image](https://github.com/user-attachments/assets/b26fc44a-e62f-4799-ba1a-1efee8a8ff96)
+
+
 
