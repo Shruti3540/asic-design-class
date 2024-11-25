@@ -4670,6 +4670,248 @@ exit
 
 </details>
 
+</details>
+
+
+
+***
+
+
+<details>
+  <summary>LAB 15: RTL2GDS of VSDbabysoc using Openroad Physical Design. </summary>
+
+# **LAB SESSION 15:**
+
+### Introduction:
+
+- Bombe: The Bombe was an electro-mechanical machine designed during World War II to decrypt German Enigma-encrypted messages. It was refined and built by Alan Turing and Gordon Welchman at Bletchley Park, UK. The Bombe systematically tested possible rotor settings of the Enigma machine by exploiting known plaintext patterns. Its logical operations helped narrow down the vast number of possible keys, significantly accelerating the decryption process. The Bombe played a critical role in the Allied war effort.
+
+- ENIAC (Electronic Numerical Integrator and Computer): It was developed during World War II by John Presper Eckert and John Mauchly at the University of Pennsylvania, was the first general-purpose, fully electronic digital computer. Completed in 1945, it was designed to compute artillery firing tables for the U.S. Army. ENIAC used vacuum tubes instead of mechanical or electromechanical components. However, it lacked a stored-program capability, requiring manual reconfiguration for each new task. ENIAC demonstrated the immense potential of electronic computing for large-scale numerical problems.
+
+- EDVAC (Electronic Discrete Variable Automatic Computer): EDVAC, also developed by Eckert and Mauchly with conceptual input from John von Neumann, was one of the first computers to implement the stored-program concept. Completed in 1949, EDVAC represented a significant improvement over ENIAC by using binary representation instead of decimal and storing both data and instructions in memory. This innovation simplified programming and laid the groundwork for the modern von Neumann architecture.
+
+The Key metrics are:
+
+- Transistors (Orange Triangles): The number of transistors on a microprocessor chip (in thousands) has increased exponentially, following Moore's Law, which predicts a doubling approximately every two years. This growth enabled more complex and capable processors, reaching the range of billions of transistors by the 2020s.
+
+- Single-Thread Performance (Blue Circles): It is measured using SpecINT. It indicates the computational ability of a single processor core. Performance grew steadily due to improvements in architecture, instruction-level parallelism, and clock speeds, but the growth rate slowed post-2005 due to physical limitations like power and heat.
+
+- Frequency (Green Diamonds): Processor clock speed (in MHz) rose steadily until the early 2000s but then stagnated as increasing clock speeds became inefficient due to heat dissipation issues.
+
+- Typical Power (Red Triangles): Power consumption increased with transistor density and frequency, becoming a critical design challenge around the mid-2000s.
+
+- Number of Logical Cores (Black Dots): The transition to multi-core processors gained momentum in the mid-2000s as a response to the stagnation in single-thread performance. By increasing the number of cores, processors enabled more efficient parallel processing, leading to significant improvements in overall performance
+
+The path to zetta-scale computing, tracing the evolution of computing performance (measured in FLOPS—floating-point operations per second) from the gigascale era in 1984 to the projected zettascale by 2035.
+
+Key Performance Levels
+
+1. Gigascale (10⁹ FLOPS): The starting point in 1984, marking the capability of early supercomputers.
+2. Terascale (10¹² FLOPS): Achieved around 1997, a significant milestone where systems like Jaguar (Cray XT5) delivered teraflop performance with power consumption of 7 MW.
+3. Petascale (10¹⁵ FLOPS): Achieved in 2008 with systems like Titan (Cray XK6) at 27 petaflops, consuming 9 MW. This milestone represents the era of petascale high-performance computing (HPC).
+4. Exascale (10¹⁸ FLOPS): Reached by systems like Frontier (Cray Shasta) in 2021, delivering 1.5 exaflops using 4 AMD GPUs and 1 AMD CPU, consuming 29 MW of power. Exascale computing enables highly detailed simulations and large-scale AI workloads.
+5. Zettascale (10²¹ FLOPS): Projected to be achieved by around 2035. At this scale, systems will handle unprecedented computational workloads, such as advanced climate modeling, AI, and large-scale simulations. Power consumption is estimated to range between 50-100 MW for a single zettascale machine.
+
+Key Technology Nodes and Innovations:
+
+1. 22 nm: Introduction of FinFET (Tri-Gate) transistors, which reduce leakage and improve gate control. Use of self-aligned contacts (SAC) and copper interconnects (Co+Cu BEOL).
+
+2. 14 nm: Transition to unidirectional metal routing for better density. Implementation of SADP (Self-Aligned Double Patterning) and SDB (Single Diffusion Break) for precise layout.
+
+3. 10 nm: Adoption of advanced patterning techniques such as: - SA-SDB (Self-Aligned SDB) - LELELE (Litho-Etch-Litho-Etch-Litho-Etch) - SAQP (Self-Aligned Quadruple Patterning) for tighter geometries.
+
+4. 7 nm: - Introduction of Extreme Ultraviolet Lithography (EUV) to simplify the patterning process and reduce overlay errors.
+
+5. 5 nm: - Integration of SiGe (Silicon-Germanium) channels for PMOS to enhance hole mobility. - Use of EUV SA-LELE (Self-Aligned Litho-Etch-Litho-Etch).
+
+6. 3 nm / 2 nm / 1.4 nm: - Transition to Gate-All-Around (GAA) nanosheet transistors for improved electrostatic control. - GAA stacks nanosheets or nanowires horizontally to maximize current drive.
+
+7. Sub-1 nm: - Development of CFET (Complementary FET), which vertically stacks NMOS over PMOS to save area. - Use of 2D materials, such as MoS₂, for atomic-scale channel thickness in 2D FETs.
+
+### Tool Installation:
+
+Commands to inatall OpenRoad:
+
+```
+git clone --recursive https://github.com/The-OpenROAD-Project/OpenROAD-flow-scripts
+cd OpenROAD-flow-scripts
+sudo ./setup.sh
+```
+
+To build locally:
+
+```
+./build_openroad.sh --local
+```
+
+Veeify Installation:
+
+```
+source ./env.sh
+yosys -help
+openroad -help
+cd flow
+make
+```
+
+![Screenshot from 2024-11-25 19-19-38](https://github.com/user-attachments/assets/e62bcf1b-dd9f-4bfd-baf0-0813a8499a62)
+
+![Screenshot from 2024-11-25 19-20-13](https://github.com/user-attachments/assets/fedd916f-17da-4e57-9e23-94b04feeed86)
+
+![Screenshot from 2024-11-25 19-21-12](https://github.com/user-attachments/assets/8bfb0aa4-500c-4dc2-a86a-968db4d8011b)
+
+![Screenshot from 2024-11-25 19-22-20](https://github.com/user-attachments/assets/a58c4d41-5b64-4a66-8ad1-709c4ae68dad)
+
+![Screenshot from 2024-11-25 19-22-48](https://github.com/user-attachments/assets/4309b844-cf31-4fdf-b2c9-e15f81a40a0d)
+
+### Automated RTL2GDS Flow for VSDBabySoC:
+
+Initial Steps:
+
+- We need to create a directory vsdbabysoc inside OpenROAD-flow-scripts/flow/designs/sky130hd
+- Now create a directory vsdbabysoc inside OpenROAD-flow-scripts/flow/designs/src and include all the verilog files here.
+- Now copy the folders gds, include, lef and lib from the VSDBabySoC folder in your system into this directory.
+- The gds folder would contain the files avsddac.gds and avsdpll.gds
+- The include folder would contain the files sandpiper.vh, sandpiper_gen.vh, sp_default.vh and sp_verilog.vh
+- The gds folder would contain the files avsddac.lef and avsdpll.lef
+- The lib folder would contain the files avsddac.lib and avsdpll.lib
+- Now copy the constraints file(vsdbabysoc_synthesis.sdc) from the VSDBabySoC folder in your system into this directory.
+- Now copy the files(macro.cfg and pin_order.cfg) from the VSDBabySoC folder in your system into this directory.
+- Now, create a config.mk file whose contents are shown below:
+
+```
+export DESIGN_NICKNAME = vsdbabysoc
+export DESIGN_NAME = vsdbabysoc
+export PLATFORM    = sky130hd
+
+export ADDITIONAL_LIBS = $(DESIGN_HOME)/src/$(DESIGN_NICKNAME)/lib/avsddac.lib \
+				         $(DESIGN_HOME)/src/$(DESIGN_NICKNAME)/lib/avsdpll.lib
+
+export VERILOG_FILES = $(DESIGN_HOME)/src/$(DESIGN_NICKNAME)/vsdbabysoc.v \
+					   $(DESIGN_HOME)/src/$(DESIGN_NICKNAME)/rvmyth.v \
+					   $(DESIGN_HOME)/src/$(DESIGN_NICKNAME)/include/clk_gate.v
+
+export VERILOG_INCLUDE_DIRS = $(DESIGN_HOME)/src/$(DESIGN_NICKNAME)/include
+
+export SDC_FILE      = $(DESIGN_HOME)/$(PLATFORM)/$(DESIGN_NICKNAME)/vsdbabysoc_synthesis.sdc
+
+export ADDITIONAL_LEFS = $(DESIGN_HOME)/src/$(DESIGN_NICKNAME)/lef/avsddac.lef \
+ 						 $(DESIGN_HOME)/src/$(DESIGN_NICKNAME)/lef/avsdpll.lef
+
+
+export ADDITIONAL_GDS = $(DESIGN_HOME)/src/$(DESIGN_NICKNAME)/gds/avsddac.gds \
+						$(DESIGN_HOME)/src/$(DESIGN_NICKNAME)/gds/avsdpll.gds
+
+export PDN_TCL = $(DESIGN_HOME)/$(PLATFORM)/$(DESIGN_NICKNAME)/pdn.tcl
+
+export DIE_AREA   = 0 0 5000 5000
+export CORE_AREA  = 10 10 4990 4990
+
+export PLACE_PINS_ARGS = -exclude left:0-600 -exclude left:1000-1600: -exclude right:* -exclude top:* -exclude bottom:*
+export MACRO_PLACEMENT = $(DESIGN_HOME)/$(PLATFORM)/$(DESIGN_NICKNAME)/macro.cfg
+
+export TNS_END_PERCENT = 100
+
+export REMOVE_ABC_BUFFERS = 1
+```
+
+Run following commands in terminal:
+
+```
+cd OpenROAD-flow-scripts
+source env.sh
+cd flow
+```
+
+Command for Synthesis:
+
+```
+make DESIGN_CONFIG=./designs/sky130hd/vsdbabysoc/config.mk synth
+```
+
+![Screenshot from 2024-11-26 02-40-51](https://github.com/user-attachments/assets/7bf6ffeb-90b0-4d0e-acdf-3a3937ec2dc2)
+
+![image](https://github.com/user-attachments/assets/35b953ff-1be0-4889-9f5b-d85564eab2ae)
+
+#### Synthesis log:
+
+![image](https://github.com/user-attachments/assets/580611f0-0305-4879-a472-4b8eaa8a13fa)
+
+#### Synthesis Check:
+
+![image](https://github.com/user-attachments/assets/2a26db61-5af0-4bd0-9cbe-5418493ff59f)
+
+#### Synthesis Stats:
+
+![Screenshot from 2024-11-26 03-48-30](https://github.com/user-attachments/assets/b1b53bd1-2865-4a19-b00b-92045f9c960d)
+
+![image](https://github.com/user-attachments/assets/bd8567b3-0a6e-4daa-a5ff-4d8fcbbe56ab)
+
+
+
+Command for Floorplan:
+
+```
+make DESIGN_CONFIG=./designs/sky130hd/vsdbabysoc/config.mk floorplan
+make gui_floorplan
+```
+
+![Screenshot from 2024-11-26 02-41-05](https://github.com/user-attachments/assets/1d66fcd1-819f-4da6-bd55-41ed6585216d)
+
+![Screenshot from 2024-11-26 02-41-10](https://github.com/user-attachments/assets/82199b14-933f-4501-ad51-57382979de8a)
+
+![Screenshot from 2024-11-26 02-41-49](https://github.com/user-attachments/assets/fd447864-c052-4df6-9f36-e397968117b1)
+
+
+
+Command for Place:
+
+```
+make DESIGN_CONFIG=./designs/sky130hd/vsdbabysoc/config.mk place
+make gui_place
+```
+
+![Screenshot from 2024-11-26 02-42-25](https://github.com/user-attachments/assets/09120cea-2e24-4eab-aae9-44b0cc023742)
+
+![Screenshot from 2024-11-26 02-43-58](https://github.com/user-attachments/assets/198b7beb-c06c-42f5-bdbd-f10874b2d6a0)
+
+![Screenshot from 2024-11-26 02-49-07](https://github.com/user-attachments/assets/4a4a6540-ce34-4677-af37-6580fb3042ad)
+
+
+
+Command for CTS:
+
+```
+make DESIGN_CONFIG=./designs/sky130hd/vsdbabysoc/config.mk cts
+make gui_cts
+```
+
+![Screenshot from 2024-11-26 02-44-17](https://github.com/user-attachments/assets/59fe94c5-6b91-49a8-b88a-e8c913e559a5)
+
+![Screenshot from 2024-11-26 02-49-56](https://github.com/user-attachments/assets/22d937ec-e0ad-4bcd-8094-96212b165f43)
+
+
+
+Command for Route:
+
+```
+make DESIGN_CONFIG=./designs/sky130hd/vsdbabysoc/config.mk route
+make gui_route
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
