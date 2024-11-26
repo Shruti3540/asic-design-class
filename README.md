@@ -4878,6 +4878,11 @@ make gui_place
 ![Screenshot from 2024-11-26 02-49-07](https://github.com/user-attachments/assets/4a4a6540-ce34-4677-af37-6580fb3042ad)
 
 
+HEATMAP:
+
+![image](https://github.com/user-attachments/assets/a9e6b0d5-defa-49d8-89a8-58b98985d58c)
+
+
 
 Command for CTS:
 
@@ -4890,7 +4895,23 @@ make gui_cts
 
 ![Screenshot from 2024-11-26 02-49-56](https://github.com/user-attachments/assets/22d937ec-e0ad-4bcd-8094-96212b165f43)
 
+HEATMAP:
 
+
+![Screenshot from 2024-11-26 14-20-29](https://github.com/user-attachments/assets/b699572b-1e77-47e6-98ab-d4a34164a335)
+
+![image](https://github.com/user-attachments/assets/9fb2451f-2850-4c62-9ca7-01a7b3d059f3)
+
+![image](https://github.com/user-attachments/assets/3c57774a-193a-46de-bedf-6ecd2a97307e)
+
+
+CTS Final Report:
+
+![Screenshot from 2024-11-26 14-39-31](https://github.com/user-attachments/assets/6c39a737-f6e2-4e16-a479-eafeb2b0710d)
+
+![Screenshot from 2024-11-26 14-39-53](https://github.com/user-attachments/assets/06e7fe4b-9bbf-457a-aa8d-c192412eac66)
+
+file:///home/shruti-chaturvedi/Pictures/Screenshots/Screenshot%20from%202024-11-26%2014-39-41.png
 
 Command for Route:
 
@@ -4899,6 +4920,9 @@ make DESIGN_CONFIG=./designs/sky130hd/vsdbabysoc/config.mk route
 make gui_route
 ```
 
+![Screenshot from 2024-11-26 15-29-18](https://github.com/user-attachments/assets/a08bb012-f6f0-4d46-8516-7bb488bce9af)
+
+![image](https://github.com/user-attachments/assets/1356ffb2-650c-4b76-abe5-6b33c3f1ae56)
 
 
 
