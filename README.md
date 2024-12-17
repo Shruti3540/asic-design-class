@@ -4875,12 +4875,12 @@ make gui_place
 
 ![Screenshot from 2024-11-26 02-43-58](https://github.com/user-attachments/assets/198b7beb-c06c-42f5-bdbd-f10874b2d6a0)
 
-![Screenshot from 2024-11-26 02-49-07](https://github.com/user-attachments/assets/4a4a6540-ce34-4677-af37-6580fb3042ad)
+![Screenshot from 2024-12-17 09-35-24](https://github.com/user-attachments/assets/cee91daf-14a6-45bb-9876-28da5b35aaa4)
 
 
 HEATMAP:
 
-![image](https://github.com/user-attachments/assets/a9e6b0d5-defa-49d8-89a8-58b98985d58c)
+![Screenshot from 2024-12-17 09-35-32](https://github.com/user-attachments/assets/eaa5d40b-dd98-4493-9b1f-ac449f840b8b)
 
 
 
@@ -4893,12 +4893,12 @@ make gui_cts
 
 ![Screenshot from 2024-11-26 02-44-17](https://github.com/user-attachments/assets/59fe94c5-6b91-49a8-b88a-e8c913e559a5)
 
-![Screenshot from 2024-11-26 02-49-56](https://github.com/user-attachments/assets/22d937ec-e0ad-4bcd-8094-96212b165f43)
+![Screenshot from 2024-12-17 09-39-00](https://github.com/user-attachments/assets/18411b46-c0e5-453f-aa54-f253e4552d6f)
 
 HEATMAP:
 
 
-![Screenshot from 2024-11-26 14-20-29](https://github.com/user-attachments/assets/b699572b-1e77-47e6-98ab-d4a34164a335)
+![Screenshot from 2024-12-17 09-41-02](https://github.com/user-attachments/assets/1a245a2b-3402-43fc-9847-3a6b9f08fd61)
 
 ![image](https://github.com/user-attachments/assets/9fb2451f-2850-4c62-9ca7-01a7b3d059f3)
 
@@ -4911,7 +4911,6 @@ CTS Final Report:
 
 ![Screenshot from 2024-11-26 14-39-53](https://github.com/user-attachments/assets/06e7fe4b-9bbf-457a-aa8d-c192412eac66)
 
-file:///home/shruti-chaturvedi/Pictures/Screenshots/Screenshot%20from%202024-11-26%2014-39-41.png
 
 Command for Route:
 
